@@ -22,7 +22,7 @@ class KaryawanController extends Controller
 
     public function getKaryawan()
     {
-        $karyawan = Karyawan::select(['id', 'user_id', 'jabatan_id', 'tanggal_bergabung', 'no_hp'])
+        $karyawan = Karyawan::select(['id', 'user_id', 'jabatan_id','nik', 'tanggal_bergabung', 'no_hp'])
                     ->with('user','jabatan'); 
 
         return DataTables::of($karyawan)
@@ -63,18 +63,17 @@ class KaryawanController extends Controller
             'no_hp' => 'required|string',
         ]);
 
-        // Create User first if not exists
         $user = User::firstOrCreate([
             'email' => $request->email,
         ], [
             'name' => $request->name,
-            'password' => bcrypt('default_password'), // Default password, change as needed
+            'password' => bcrypt('123123123'),
         ]);
 
-        // Create Karyawan
         $karyawan = Karyawan::create([
             'user_id' => $user->id,
             'jabatan_id' => $request->jabatan_id,
+            'nik' => $request->nik,
             'tanggal_bergabung' => $request->tanggal_bergabung,
             'no_hp' => $request->no_hp,
         ]);

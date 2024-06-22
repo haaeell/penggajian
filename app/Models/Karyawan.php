@@ -13,8 +13,8 @@ class Karyawan extends Model
 
     protected $fillable = [
         'user_id',
-        'nama',
         'jabatan_id',
+        'nik',
         'tanggal_bergabung',
         'no_hp',
     ];
@@ -28,5 +28,10 @@ class Karyawan extends Model
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class);
+    }
+
+    public function potonganGaji()
+    {
+        return $this->hasMany(PotonganGaji::class, 'karyawan_id');
     }
 }

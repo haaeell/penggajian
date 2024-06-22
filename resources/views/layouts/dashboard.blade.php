@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Page CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Helpers -->
@@ -115,11 +116,11 @@
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-                
+
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Pages</span>
                     </li>
-                
+
                     <li class="menu-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}">
                         <a href="{{ route('karyawan.index') }}" class="menu-link gap-3">
                             <i class="bi bi-database-add"></i>
@@ -138,14 +139,16 @@
                             Absensi
                         </a>
                     </li>
-                
-                    <li class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
+
+                    <li
+                        class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
                             <i class="bi bi-building-add"></i>
                             Potongan Gaji
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
+                            <li
+                                class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
                                 <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link">
                                     <div data-i18n="Without menu">Jenis Potongan</div>
                                 </a>
@@ -176,7 +179,7 @@
                         </a>
                     </li>
                 </ul>
-                
+
             </aside>
             <!-- / Menu -->
 
@@ -267,12 +270,14 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item"  href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
                                             @csrf
                                         </form>
                                     </li>
@@ -310,11 +315,8 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script>
         let table = new DataTable('.datatable', {
@@ -322,42 +324,48 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
 
-@if ($errors->any())
-    <script>
-        let errorMessages = '';
-        @foreach ($errors->all() as $error)
-            errorMessages += "{{ $error }}\n";
-        @endforeach
-        toastr.error(errorMessages);
-    </script>
-@endif
-@if (session('success') || session('error'))
+    @if ($errors->any())
+        <script>
+            let errorMessages = '';
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+            toastr.error(errorMessages);
+        </script>
+    @endif
+    @if (session('success') || session('error'))
+        <script>
+            $(document).ready(function() {
+                var successMessage = "{{ session('success') }}";
+                var errorMessage = "{{ session('error') }}";
+
+                if (successMessage) {
+                    toastr.success(successMessage);
+                }
+
+                if (errorMessage) {
+                    toastr.error(errorMessage);
+                }
+            });
+        </script>
+    @endif
     <script>
         $(document).ready(function() {
-            var successMessage = "{{ session('success') }}";
-            var errorMessage = "{{ session('error') }}";
-
-            if (successMessage) {
-                toastr.success(response.success);
-            }
-
-            if (errorMessage) {
-                toastr.error(errorMessages);
-            }
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         });
     </script>
-@endif
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    });
-</script>
-@stack('scripts')
+    @stack('scripts')
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>

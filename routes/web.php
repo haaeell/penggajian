@@ -38,9 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('get-jabatans', [JabatanController::class, 'getJabatans'])->name('getJabatans');
     Route::resource('absensi', AbsensiController::class);
     Route::resource('potongan-gaji', PotonganGajiController::class);
+    Route::get('get-potongan', [PotonganGajiController::class, 'getPotongan'])->name('getPotongan');
     Route::resource('jenis-potongan-gaji', JenisPotonganGajiController::class);
+    Route::get('get-jenis', [JenisPotonganGajiController::class, 'getJenis'])->name('getJenis');
     Route::resource('penggajian', PenggajianController::class);
     Route::resource('laporan', LaporanController::class);
     Route::resource('users', UserController::class);
     Route::get('get-users', [UserController::class, 'getUsers'])->name('getUsers');
+    
 });
