@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
@@ -32,11 +32,12 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Helpers -->
     <script src="../assets/vendor/js/helpers.js"></script>
+
 
 
     <script src="../assets/js/config.js"></script>
@@ -125,8 +126,8 @@
                             Data Karyawan
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->routeIs('jabatan.index') ? 'active' : '' }}">
-                        <a href="{{ route('jabatan.index') }}" class="menu-link gap-3">
+                    <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
+                        <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
                             <i class="bi bi-database-add"></i>
                             Data Jabatan
                         </a>
@@ -166,6 +167,12 @@
                         <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
                             <i class="bi bi-bar-chart"></i>
                             Laporan
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                        <a href="{{ route('users.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-person"></i>
+                            Users
                         </a>
                     </li>
                 </ul>
@@ -260,10 +267,14 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
+                                        <a class="dropdown-item"  href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </li>
@@ -310,6 +321,43 @@
             responsive: true
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+@if ($errors->any())
+    <script>
+        let errorMessages = '';
+        @foreach ($errors->all() as $error)
+            errorMessages += "{{ $error }}\n";
+        @endforeach
+        toastr.error(errorMessages);
+    </script>
+@endif
+@if (session('success') || session('error'))
+    <script>
+        $(document).ready(function() {
+            var successMessage = "{{ session('success') }}";
+            var errorMessage = "{{ session('error') }}";
+
+            if (successMessage) {
+                toastr.success(response.success);
+            }
+
+            if (errorMessage) {
+                toastr.error(errorMessages);
+            }
+        });
+    </script>
+@endif
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    });
+</script>
+@stack('scripts')
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>

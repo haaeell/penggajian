@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -41,4 +42,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class);
+    }
+
+    public function getRoleBadgeClassAttribute()
+    {
+        switch ($this->role) {
+            case 'admin':
+                return 'badge rounded-pill bg-danger';
+            case 'pimpinan':
+                return 'badge rounded-pill bg-success';
+            case 'karyawan':
+                return 'badge rounded-pill bg-primary';
+            default:
+                return 'badge bg-secondary';
+        }
+    }
+
+    
 }
