@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,16 @@ class PotonganGaji extends Model
     protected $fillable = [
         'karyawan_id',
         'total_potongan_gaji',
+        'bulan',
+        'tahun',
     ];
+
+    protected $dates = ['bulan'];
+    
+    public function getBulanAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
 
     public function karyawan()
     {

@@ -34,4 +34,9 @@ class Karyawan extends Model
     {
         return $this->hasMany(PotonganGaji::class, 'karyawan_id');
     }
+
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class);
+    }
 }

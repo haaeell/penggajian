@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('jenis-potongan-gaji', JenisPotonganGajiController::class);
     Route::get('get-jenis', [JenisPotonganGajiController::class, 'getJenis'])->name('getJenis');
     Route::resource('penggajian', PenggajianController::class);
+    Route::get('/penggajian/{id}/pdf', [PenggajianController::class, 'generatePdf'])->name('penggajian.pdf');
+    Route::post('/penggajian/simpan', [PenggajianController::class, 'simpanDataGaji'])->name('penggajian.simpan');
+
     Route::resource('laporan', LaporanController::class);
     Route::resource('users', UserController::class);
     Route::get('get-users', [UserController::class, 'getUsers'])->name('getUsers');

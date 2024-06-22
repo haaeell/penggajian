@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penggajian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -9,9 +11,23 @@ class LaporanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('laporan.index');
+        Carbon::setLocale('id');  // Set locale ke bahasa Indonesia
+
+        $query = Penggajian::with('karyawan.user', 'karyawan.jabatan');
+
+        if ($request->filled('bulan')) {
+            $query->whereMonth('bulan', $request->bulan);
+        }
+
+        if ($request->filled('tahun')) {
+            $query->whereYear('bulan', $request->tahun);
+        }
+
+        $penggajianData = $query->get();
+
+        return view('laporan.index', compact('penggajianData'));
     }
 
     /**
