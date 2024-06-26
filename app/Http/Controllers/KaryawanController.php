@@ -22,7 +22,7 @@ class KaryawanController extends Controller
 
     public function getKaryawan()
     {
-        $karyawan = Karyawan::select(['id', 'user_id', 'jabatan_id','nik', 'tanggal_bergabung', 'no_hp'])
+        $karyawan = Karyawan::select(['id', 'user_id', 'jabatan_id','nik', 'tanggal_bergabung', 'no_hp','no_rekening','alamat','tempat_lahir','tanggal_lahir','jenis_kelamin'])
                     ->with('user','jabatan'); 
 
         return DataTables::of($karyawan)
@@ -55,12 +55,18 @@ class KaryawanController extends Controller
 
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'jabatan_id' => 'required',
             'tanggal_bergabung' => 'required|date',
             'no_hp' => 'required|string',
+            'no_rekening' => 'required|string',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
         ]);
 
         $user = User::firstOrCreate([
@@ -76,6 +82,11 @@ class KaryawanController extends Controller
             'nik' => $request->nik,
             'tanggal_bergabung' => $request->tanggal_bergabung,
             'no_hp' => $request->no_hp,
+            'no_rekening' => $request->no_rekening,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
         return response()->json(['success' => 'Karyawan added successfully.']);
@@ -92,12 +103,11 @@ class KaryawanController extends Controller
         'jabatans' => $jabatans,
     ]);
 }
-    public function show($id)
-    {
-        $karyawan = Karyawan::findOrFail($id);
-        $jabatans = Jabatan::all();
-        return view('karyawan.edit', compact('karyawan', 'jabatans'));
-    }
+public function show($id)
+{
+    $karyawan = Karyawan::with('user', 'jabatan')->findOrFail($id);
+    return response()->json(['karyawan' => $karyawan]);
+}
 
     public function update(Request $request, $id)
     {
@@ -107,6 +117,11 @@ class KaryawanController extends Controller
             'jabatan_id' => 'required',
             'tanggal_bergabung' => 'required|date',
             'no_hp' => 'required|string',
+            'no_rekening' => 'required|string',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);

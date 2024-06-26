@@ -17,6 +17,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('jabatan_id')->constrained('jabatan');
             $table->date('tanggal_bergabung');
+            $table->date('tanggal_lahir');
+            $table->string('tempat_lahir');
+            $table->string('no_rekening');
+            $table->string('jenis_kelamin');
+            $table->string('alamat');
             $table->string('no_hp');
             $table->timestamps();
         });
