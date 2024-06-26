@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table" id="potonganGajiTable">
+                        <table class="table datatable" id="potonganGajiTable">
                             <thead>
                                 <tr>
                                     <th class="text-start">Nama Karyawan</th>
@@ -160,7 +160,8 @@
                                         </td>
                                         <td class="text-start">Rp.
                                             {{ number_format($item->total_potongan_gaji, 0, ',', '.') }}</td>
-                                        <td>{{ $item->bulan }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromDate(null, $item->bulan, 1)->locale('id')->isoFormat('MMMM') }}</td>
+
                                         <td>{{ $item->tahun }}</td>
                                         <td>
                                             <div class="d-flex gap-1">

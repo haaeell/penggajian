@@ -19,38 +19,35 @@ class PenggajianController extends Controller
     $bulan = $request->bulan;
     $tahun = $request->tahun;
 
-    // Ambil karyawan yang memiliki absensi sesuai dengan bulan dan tahun yang dipilih
     $karyawans = Karyawan::with([
         'user',
         'jabatan',
         'absensi' => function ($query) use ($bulan, $tahun) {
-            // Subquery untuk mencari id karyawan dengan absensi sesuai bulan dan tahun
+
             $query->where('bulan', $bulan)->where('tahun', $tahun);
         },
         'potonganGaji.jenisPotonganGaji'
+        
     ])->whereHas('absensi', function ($query) use ($bulan, $tahun) {
-        // Pastikan ada absensi dengan bulan dan tahun yang dipilih
+
         $query->where('bulan', $bulan)->where('tahun', $tahun);
+
     })->get();
 
-    // Inisialisasi array untuk menyimpan data penggajian
     $penggajianData = [];
 
     foreach ($karyawans as $karyawan) {
-        // Hitung gaji berdasarkan data yang telah difilter
+
         $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
         $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
         $uang_makan = $karyawan->jabatan->uang_makan;
 
-        // Hitung total hadir dari data absensi yang telah difilter
         $hadir = $karyawan->absensi->sum('hadir');
         $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
 
-        // Hitung total potongan gaji dari relasi potonganGaji
         $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
         $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
 
-        // Masukkan data ke dalam array penggajianData
         $penggajianData[] = [
             'karyawan' => $karyawan,
             'gaji_per_hari' => $gaji_per_hari,
@@ -63,7 +60,6 @@ class PenggajianController extends Controller
         ];
     }
 
-    // Mengembalikan view penggajian.index dengan data penggajianData
     return view('penggajian.index', compact('penggajianData'));
 }
 

@@ -13,7 +13,7 @@ class LaporanController extends Controller
      */
     public function index(Request $request)
     {
-        Carbon::setLocale('id');  // Set locale ke bahasa Indonesia
+        Carbon::setLocale('id'); 
 
         $query = Penggajian::with('karyawan.user', 'karyawan.jabatan');
 

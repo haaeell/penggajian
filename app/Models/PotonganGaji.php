@@ -18,12 +18,6 @@ class PotonganGaji extends Model
         'tahun',
     ];
 
-    protected $dates = ['bulan'];
-    
-    public function getBulanAttribute($value)
-    {
-        return Carbon::parse($value);
-    }
 
     public function karyawan()
     {

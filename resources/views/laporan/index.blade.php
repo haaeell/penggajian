@@ -14,8 +14,11 @@
                                 <select class="form-select" name="bulan">
                                     <option value="">Pilih Bulan</option>
                                     @for ($month = 1; $month <= 12; $month++)
-                                        <option value="{{ $month }}" {{ request('bulan') == $month ? 'selected' : '' }}>{{ Carbon\Carbon::create()->month($month)->translatedFormat('F') }}</option>
-                                    @endfor
+                                    <option value="{{ $month }}"
+                                        {{ ($bulan ?? date('n')) == $month ? 'selected' : '' }}>
+                                        {{ Carbon\Carbon::create()->month($month)->locale('id')->isoFormat('MMMM') }}
+                                    </option>
+                                @endfor
                                 </select>
                             </div>
                         </div>
