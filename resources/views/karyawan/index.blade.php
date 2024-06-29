@@ -6,8 +6,11 @@
             <h3 class="fw-bold">Karyawan</h3>
             <div class="card shadow border-0">
                 <div class="col-md-3">
-                    <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
-                        data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan</button>
+                   @if (Auth::user()->role == 'admin' )
+                   <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
+                   data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
+               </button>
+                   @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,6 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -183,11 +187,17 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row) {
-                            return `
+                            var actionButtons = `
                                 <button class="btn rounded-pill btn-primary btn-sm btn-show" data-id="${data}"><i class="bi bi-eye"></i></button>
-                                <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
-                                <button class="btn rounded-pill btn-danger btn-sm btn-delete" data-id="${data}"><i class="bi bi-trash"></i></button>
                             `;
+                            if ({{ Auth::user()->role == 'admin' ? 'true' : 'false' }}) {
+                                actionButtons += `
+                                    <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn rounded-pill btn-danger btn-sm btn-delete" data-id="${data}"><i class="bi bi-trash"></i></button>
+                                `;
+                            }
+
+                            return actionButtons;
                         }
                     }
                 ]

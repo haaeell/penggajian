@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Penggajian</title>
 
     <meta name="description" content="" />
 
@@ -70,34 +70,11 @@
                                         d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
                                         id="path-5"></path>
                                 </defs>
-                                <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                                        <g id="Icon" transform="translate(27.000000, 15.000000)">
-                                            <g id="Mask" transform="translate(0.000000, 8.000000)">
-                                                <mask id="mask-2" fill="white">
-                                                    <use xlink:href="#path-1"></use>
-                                                </mask>
-                                                <use fill="#696cff" xlink:href="#path-1"></use>
-                                                <g id="Path-3" mask="url(#mask-2)">
-                                                    <use fill="#696cff" xlink:href="#path-3"></use>
-                                                    <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
-                                                </g>
-                                                <g id="Path-4" mask="url(#mask-2)">
-                                                    <use fill="#696cff" xlink:href="#path-4"></use>
-                                                    <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
-                                                </g>
-                                            </g>
-                                            <g id="Triangle"
-                                                transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) ">
-                                                <use fill="#696cff" xlink:href="#path-5"></use>
-                                                <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
+                               
+                                   
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Penggajian</span>
                     </a>
 
                     <a href="javascript:void(0);"
@@ -110,23 +87,23 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'pimpinan')
                     <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
                         <a href="/home" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Pages</span>
-                    </li>
-
                     <li class="menu-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}">
                         <a href="{{ route('karyawan.index') }}" class="menu-link gap-3">
                             <i class="bi bi-database-add"></i>
                             Data Karyawan
                         </a>
                     </li>
+
+                    @endif
+                    @if (Auth::user()->role == 'admin' ) 
+                   
                     <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
                         <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
                             <i class="bi bi-database-add"></i>
@@ -160,24 +137,34 @@
                             </li>
                         </ul>
                     </li>
+                    
+                   
+                    @endif
                     <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
                         <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
                             <i class="bi bi-clipboard2-data"></i>
                             Penggajian
                         </a>
                     </li>
+
+                    @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
                     <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                         <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
                             <i class="bi bi-bar-chart"></i>
                             Laporan
                         </a>
                     </li>
+                    @endif
+                    @if ( Auth::user()->role == 'admin')
                     <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
                         <a href="{{ route('users.index') }}" class="menu-link gap-3">
                             <i class="bi bi-person"></i>
                             Users
                         </a>
                     </li>
+                    @endif
+                    
+                    
                 </ul>
 
             </aside>
@@ -208,12 +195,7 @@
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->
-                            <li class="nav-item lh-1 me-3">
-                                <a class="github-button"
-                                    href="https://github.com/themeselection/sneat-html-admin-template-free"
-                                    data-icon="octicon-star" data-size="large" data-show-count="true"
-                                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
-                            </li>
+                           
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -235,8 +217,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-semibold d-block">{{Auth::user()->name}}</span>
+                                                    <small class="text-muted">{{Auth::user()->role}}</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -251,20 +233,10 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
+                                       
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span
-                                                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                            </span>
-                                        </a>
+                                       
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>

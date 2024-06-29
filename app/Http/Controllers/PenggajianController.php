@@ -19,25 +19,40 @@ class PenggajianController extends Controller
     $bulan = $request->bulan;
     $tahun = $request->tahun;
 
-    $karyawans = Karyawan::with([
-        'user',
-        'jabatan',
-        'absensi' => function ($query) use ($bulan, $tahun) {
-
+    if (auth()->user()->role == 'karyawan') {
+        // Jika peran pengguna adalah karyawan, hanya ambil data gaji miliknya
+        $karyawans = Karyawan::with([
+            'user',
+            'jabatan',
+            'absensi' => function ($query) use ($bulan, $tahun) {
+                $query->where('bulan', $bulan)->where('tahun', $tahun);
+            },
+            'potonganGaji.jenisPotonganGaji'
+        ])
+        ->where('user_id', auth()->user()->id)
+        ->whereHas('absensi', function ($query) use ($bulan, $tahun) {
             $query->where('bulan', $bulan)->where('tahun', $tahun);
-        },
-        'potonganGaji.jenisPotonganGaji'
-        
-    ])->whereHas('absensi', function ($query) use ($bulan, $tahun) {
-
-        $query->where('bulan', $bulan)->where('tahun', $tahun);
-
-    })->get();
+        })
+        ->get();
+    } else {
+        // Jika peran pengguna selain karyawan, ambil semua data gaji
+        $karyawans = Karyawan::with([
+            'user',
+            'jabatan',
+            'absensi' => function ($query) use ($bulan, $tahun) {
+                $query->where('bulan', $bulan)->where('tahun', $tahun);
+            },
+            'potonganGaji.jenisPotonganGaji'
+        ])
+        ->whereHas('absensi', function ($query) use ($bulan, $tahun) {
+            $query->where('bulan', $bulan)->where('tahun', $tahun);
+        })
+        ->get();
+    }
 
     $penggajianData = [];
 
     foreach ($karyawans as $karyawan) {
-
         $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
         $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
         $uang_makan = $karyawan->jabatan->uang_makan;
@@ -62,6 +77,7 @@ class PenggajianController extends Controller
 
     return view('penggajian.index', compact('penggajianData'));
 }
+
 
 
     public function generatePdf($id)

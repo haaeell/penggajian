@@ -28,11 +28,13 @@
                                 <select class="form-select" name="tahun">
                                     <option value="">Pilih Tahun</option>
                                     @for ($year = 2020; $year <= now()->year; $year++)
-                                        <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                        <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>{{ $year }}</option>
                                     @endfor
                                 </select>
                             </div>
+                            
                         </div>
+                        
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Laporan</label>

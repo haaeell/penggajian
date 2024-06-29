@@ -7,7 +7,7 @@
             <div class="card shadow border-0 mb-3">
                 <div class="card-body">
                     <form action="{{ route('penggajian.index') }}" method="GET">
-                        <div class="row">
+                        <div class="row d-flex align-items-center">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Bulan</label>
@@ -28,20 +28,17 @@
                                     <select class="form-select" name="tahun">
                                         <option value="">Pilih Tahun</option>
                                         @for ($year = 2020; $year <= now()->year; $year++)
-                                            <option value="{{ $year }}"
-                                                {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}
-                                            </option>
+                                            <option value="{{ $year }}" {{ request('tahun', now()->year) == $year ? 'selected' : '' }}>{{ $year }}</option>
                                         @endfor
                                     </select>
                                 </div>
                             </div>
-
+                                
+                                <div class="col-md-4 text-end">
+                                    <button type="submit" class="btn btn-primary mt-4">Generate Data Gaji </button>
+                                </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12 text-end">
-                                <button type="submit" class="btn btn-primary">Generate Data Gaji </button>
-                            </div>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -75,18 +72,34 @@
                                                     class="btn rounded-pill btn-secondary btn-sm" target="_blank">
                                                     <i class="bi bi-printer"></i>
                                                 </a>
-                                                <a href="#" class="btn rounded-pill btn-success btn-sm">
-                                                    <i class="bi bi-check"></i>
-                                                </a>
                                             </div>
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="detailModalLabel">Slip Gaji Karyawan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Isi detail gaji akan di-load via AJAX -->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                    <a href="{{ route('penggajian.pdf', $data['karyawan']->id) }}" class="btn btn-primary">Cetak</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-primary mx-3" id="simpanDataGaji">
-                            Simpan Data Gaji
-                        </button>
+                       @if (Auth::user()->role == 'admin')
+                       <button type="button" class="btn btn-primary mx-3" id="simpanDataGaji">
+                        Simpan Data Gaji
+                    </button>
+                       @endif
 
                     </div>
                 </div>
@@ -95,23 +108,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailModalLabel">Slip Gaji Karyawan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Isi detail gaji akan di-load via AJAX -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-primary">Cetak</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 
