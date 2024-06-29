@@ -106,7 +106,7 @@
                    
                     <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
                         <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-database-add"></i>
+                            <i class="bi bi-person-workspace"></i>
                             Data Jabatan
                         </a>
                     </li>
@@ -120,7 +120,7 @@
                     <li
                         class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
-                            <i class="bi bi-building-add"></i>
+                            <i class="bi bi-calculator"></i>
                             Potongan Gaji
                         </a>
                         <ul class="menu-sub">
@@ -158,7 +158,7 @@
                     @if ( Auth::user()->role == 'admin')
                     <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
                         <a href="{{ route('users.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-person-fill-add"></i>
                             Users
                         </a>
                     </li>
@@ -202,7 +202,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt
+                                        <img src="" alt
                                             class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
@@ -211,10 +211,7 @@
                                         <a class="dropdown-item" href="#">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        <img src="../assets/img/avatars/1.png" alt
-                                                            class="w-px-40 h-auto rounded-circle" />
-                                                    </div>
+                                                   
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">{{Auth::user()->name}}</span>

@@ -50,8 +50,12 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 text-end">
-                            <button type="submit" class="btn btn-primary">Generate Laporan</button>
+                            <button type="submit" class="btn btn-success" style="background-color: #28a745; border-color: #28a745;">
+                                Generate Laporan
+                            </button>
                         </div>
+                    </div>
+                    
                     </div>
                 </form>
             </div>

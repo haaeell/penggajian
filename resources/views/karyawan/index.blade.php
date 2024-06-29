@@ -7,9 +7,10 @@
             <div class="card shadow border-0">
                 <div class="col-md-3">
                    @if (Auth::user()->role == 'admin' )
-                   <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
-                   data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
-               </button>
+                   <button class="btn rounded-pill mx-3 mt-3" style="background-color: #28a745; color: white; border-color: #28a745;" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan">
+                    <i class="bi bi-plus"></i> Tambah Karyawan
+                </button>
+                
                    @endif
                 </div>
                 <div class="card-body">

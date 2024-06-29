@@ -48,8 +48,12 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-primary" id="btn-save">Simpan</button>
+                                    <button type="submit" class="btn btn-success mx-3 mt-3" style="background-color: #28a745; color: white; border-color: #28a745;" id="btn-save">
+                                        Simpan
+                                    </button>
                                 </div>
+                            </div>
+                            
                             </div>
                         </form>
 
@@ -128,8 +132,11 @@
                                         value="{{ $tahun ?? date('Y') }}">
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <button type="submit" class="btn btn-success" style="background-color: #28a745; border-color: #28a745;">
+                                        Filter
+                                    </button>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>

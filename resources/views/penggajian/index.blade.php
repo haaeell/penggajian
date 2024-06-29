@@ -34,9 +34,12 @@
                                 </div>
                             </div>
                                 
-                                <div class="col-md-4 text-end">
-                                    <button type="submit" class="btn btn-primary mt-4">Generate Data Gaji </button>
-                                </div>
+                            <div class="col-md-4 text-end">
+                                <button type="submit" class="btn btn-success mt-4" style="background-color: #28a745; border-color: #28a745;">
+                                    Generate Data Gaji
+                                </button>
+                            </div>
+                            
                         </div>
                         
                     </form>
@@ -96,9 +99,10 @@
                             </tbody>
                         </table>
                        @if (Auth::user()->role == 'admin')
-                       <button type="button" class="btn btn-primary mx-3" id="simpanDataGaji">
+                       <button type="button" class="btn btn-success mx-3" id="simpanDataGaji" style="background-color: #28a745; border-color: #28a745;">
                         Simpan Data Gaji
                     </button>
+                    
                        @endif
 
                     </div>

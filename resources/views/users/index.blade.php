@@ -6,9 +6,11 @@
             <h3 class="fw-bold">Users</h3>
             <div class="card shadow border-0">
                 <div class="col-md-3">
-                    <button class="btn rounded-pill btn-primary mx-3 mt-3" id="btn-add"><i class="bi bi-plus"></i> Add
-                        User</button>
+                    <button class="btn rounded-pill mx-3 mt-3" style="background-color: #28a745; color: white; border-color: #28a745;" id="btn-add">
+                        <i class="bi bi-plus"></i> Tambah User
+                    </button>
                 </div>
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table" id="users-table">

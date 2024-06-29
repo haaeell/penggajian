@@ -59,8 +59,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 d-flex align-items-end">
-                                    <button type="submit" class="btn rounded-pill btn-primary"><i class="bi bi-search"></i> Tampilkan Absensi</button>
+                                    <button type="submit" class="btn rounded-pill" style="background-color: #28a745; color: white; border-color: #28a745;">
+                                        <i class="bi bi-search"></i> Tampilkan Absensi
+                                    </button>
                                 </div>
+                                
                             </div>
                         </form>
 
@@ -82,7 +85,7 @@
                                                     <th>Izin</th>
                                                     <th>Sakit</th>
                                                     <th>Alpa</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -95,16 +98,19 @@
                                                     <td><input type="number" style="width: 70px;" class="form-control" name="izin[{{ $item->id }}]" value="{{ $absensi[$item->id]['izin'] ?? old('izin.' . $item->id, 0) }}"></td>
                                                     <td><input type="number" style="width: 70px;" class="form-control" name="sakit[{{ $item->id }}]" value="{{ $absensi[$item->id]['sakit'] ?? old('sakit.' . $item->id, 0) }}"></td>
                                                     <td><input type="number" style="width: 70px;" class="form-control" name="alpa[{{ $item->id }}]" value="{{ $absensi[$item->id]['alpa'] ?? old('alpa.' . $item->id, 0) }}"></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-danger delete-absensi" data-karyawan-id="{{ $item->id }}" data-karyawan-name="{{ $item->user->name }}"><i class="bi bi-trash"></i></button>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-danger delete-absensi text-center" data-karyawan-id="{{ $item->id }}" data-karyawan-name="{{ $item->user->name }}">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
                                                     </td>
+                                                    
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             
                                         </table>
                                     </div>
-                                    <button type="submit" class="btn rounded-pill btn-primary mt-3"><i class="bi bi-save"></i> Simpan Absensi</button>
+                                    <button type="submit" class="btn rounded-pill btn-primary mt-3" style="background-color: #28a745; color: white; border-color: #28a745;"><i class="bi bi-save"></i> Simpan Absensi</button>
                                 </div>
                             </div>
                         </form>
