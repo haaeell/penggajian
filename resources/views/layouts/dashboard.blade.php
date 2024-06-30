@@ -70,8 +70,8 @@
                                         d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
                                         id="path-5"></path>
                                 </defs>
-                               
-                                   
+
+
                             </svg>
                         </span>
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">Penggajian</span>
@@ -88,57 +88,53 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'pimpinan')
-                    <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
-                        <a href="/home" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
-                    <li class="menu-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}">
-                        <a href="{{ route('karyawan.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-database-add"></i>
-                            Data Karyawan
-                        </a>
-                    </li>
-
+                        <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
+                            <a href="/home" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div data-i18n="Analytics">Dashboard</div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}">
+                            <a href="{{ route('karyawan.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-database-add"></i>
+                                Data Karyawan
+                            </a>
+                        </li>
                     @endif
-                    @if (Auth::user()->role == 'admin' ) 
-                   
-                    <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
-                        <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-database-add"></i>
-                            Data Jabatan
-                        </a>
-                    </li>
-                    <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
-                        <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-clipboard-data"></i>
-                            Absensi
-                        </a>
-                    </li>
+                    @if (Auth::user()->role == 'admin')
+                        <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
+                            <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-database-add"></i>
+                                Data Jabatan
+                            </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
+                            <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-clipboard-data"></i>
+                                Absensi
+                            </a>
+                        </li>
 
-                    <li
-                        class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
-                            <i class="bi bi-building-add"></i>
-                            Potongan Gaji
-                        </a>
-                        <ul class="menu-sub">
-                            <li
-                                class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
-                                <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link">
-                                    <div data-i18n="Without menu">Jenis Potongan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
-                                <a href="{{ route('potongan-gaji.index') }}" class="menu-link">
-                                    <div data-i18n="Without navbar">Potong Gaji</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                   
+                        <li
+                            class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
+                                <i class="bi bi-building-add"></i>
+                                Potongan Gaji
+                            </a>
+                            <ul class="menu-sub">
+                                <li
+                                    class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
+                                    <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link">
+                                        <div data-i18n="Without menu">Jenis Potongan</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
+                                    <a href="{{ route('potongan-gaji.index') }}" class="menu-link">
+                                        <div data-i18n="Without navbar">Potong Gaji</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     @endif
                     <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
                         <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
@@ -148,23 +144,23 @@
                     </li>
 
                     @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
-                    <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
-                        <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-bar-chart"></i>
-                            Laporan
-                        </a>
-                    </li>
+                        <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
+                            <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-bar-chart"></i>
+                                Laporan
+                            </a>
+                        </li>
                     @endif
-                    @if ( Auth::user()->role == 'admin')
-                    <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                        <a href="{{ route('users.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-person"></i>
-                            Users
-                        </a>
-                    </li>
+                    @if (Auth::user()->role == 'admin')
+                        <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                            <a href="{{ route('users.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-person"></i>
+                                Users
+                            </a>
+                        </li>
                     @endif
-                    
-                    
+
+
                 </ul>
 
             </aside>
@@ -195,15 +191,26 @@
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->
-                           
+
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt
-                                            class="w-px-40 h-auto rounded-circle" />
+                                        @if (Auth::user()->role == 'karyawan')
+                                            @if ($karyawan->foto)
+                                                <img src="{{ asset('uploads/foto/' . $karyawan->foto) }}"
+                                                    alt="Foto Profil" class="img-thumbnail mt-2" width="150">
+                                            @else
+                                                <img src="{{ asset('assets/img/avatars/default.png') }}"
+                                                    alt="Foto Profil Default" class="img-thumbnail mt-2"
+                                                    width="150">
+                                            @endif
+                                        @else
+                                            <img src="../assets/img/avatars/1.png" alt
+                                                class="w-px-40 h-auto rounded-circle" />
+                                        @endif
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -212,13 +219,26 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="../assets/img/avatars/1.png" alt
-                                                            class="w-px-40 h-auto rounded-circle" />
+                                                        @if (Auth::user()->role == 'karyawan')
+                                                            @if ($karyawan->foto)
+                                                                <img src="{{ asset('uploads/foto/' . $karyawan->foto) }}"
+                                                                    alt="Foto Profil" class="img-thumbnail mt-2"
+                                                                    width="150">
+                                                            @else
+                                                                <img src="{{ asset('assets/img/avatars/default.png') }}"
+                                                                    alt="Foto Profil Default"
+                                                                    class="img-thumbnail mt-2" width="150">
+                                                            @endif
+                                                        @else
+                                                            <img src="../assets/img/avatars/1.png" alt
+                                                                class="w-px-40 h-auto rounded-circle" />
+                                                        @endif
+
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">{{Auth::user()->name}}</span>
-                                                    <small class="text-muted">{{Auth::user()->role}}</small>
+                                                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                                                    <small class="text-muted">{{ Auth::user()->role }}</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -226,17 +246,19 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
+                                    @if (Auth::user()->role == 'karyawan')
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                <i class="bx bx-user me-2"></i>
+                                                <span class="align-middle">My Profile</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
+
                                     </li>
                                     <li>
-                                       
-                                    </li>
-                                    <li>
-                                       
+
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
@@ -297,11 +319,11 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-    $('.select2').select2();
-});
-</script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 
     @if ($errors->any())
         <script>

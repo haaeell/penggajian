@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jabatan;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $jabatanCount = Jabatan::count();
+        $karyawanCount = Karyawan::count();
+        return view('home', compact('jabatanCount', 'karyawanCount'));
     }
 }
