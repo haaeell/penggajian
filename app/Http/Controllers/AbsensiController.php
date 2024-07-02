@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\AbsensiImport;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class AbsensiController extends Controller
 {
@@ -18,14 +21,14 @@ class AbsensiController extends Controller
 
         $karyawan = Karyawan::with(['user', 'jabatan'])->get();
         $absensi = Absensi::where('bulan', $bulan)
-                            ->where('tahun', $tahun)
-                            ->get()
-                            ->keyBy('karyawan_id');
+            ->where('tahun', $tahun)
+            ->get()
+            ->keyBy('karyawan_id');
 
         return view('absensi.index', compact('karyawan', 'absensi', 'bulan', 'tahun'));
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,7 +64,7 @@ class AbsensiController extends Controller
         }
 
         return redirect()->route('absensi.index', ['bulan' => $bulan, 'tahun' => $tahun])
-                         ->with('success', 'Absensi berhasil disimpan.');
+            ->with('success', 'Absensi berhasil disimpan.');
     }
     /**
      * Display the specified resource.
@@ -91,17 +94,38 @@ class AbsensiController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    $absensi = Absensi::where('karyawan_id', $id)
-                      ->where('bulan', request('bulan'))
-                      ->where('tahun', request('tahun'))
-                      ->first();
-    
-    if ($absensi) {
-        $absensi->delete();
-        return response()->json(['success' => true]);
+    {
+        $absensi = Absensi::where('karyawan_id', $id)
+            ->where('bulan', request('bulan'))
+            ->where('tahun', request('tahun'))
+            ->first();
+
+        if ($absensi) {
+            $absensi->delete();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
     }
 
-    return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
-}
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        try {
+            Excel::import(new AbsensiImport, $request->file('file'));
+            return redirect()->back()->with('success', 'Data absensi berhasil diimpor.');
+        } catch (ValidationException $e) {
+            $failures = $e->failures();
+
+            $errors = [];
+            foreach ($failures as $failure) {
+                $errors[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+
+            return redirect()->back()->with('error', implode('<br>', $errors));
+        }
+    }
 }

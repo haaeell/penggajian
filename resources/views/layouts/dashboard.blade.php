@@ -199,8 +199,8 @@
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
                                         @if (Auth::user()->role == 'karyawan')
-                                            @if ($karyawan->foto)
-                                                <img src="{{ asset('uploads/foto/' . $karyawan->foto) }}"
+                                            @if (Auth::user()->karyawan->foto)
+                                                <img src="{{ asset('uploads/foto/' . Auth::user()->karyawan->foto) }}"
                                                     alt="Foto Profil" class="img-thumbnail mt-2" width="150">
                                             @else
                                                 <img src="{{ asset('assets/img/avatars/default.png') }}"
@@ -220,19 +220,18 @@
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
                                                         @if (Auth::user()->role == 'karyawan')
-                                                            @if ($karyawan->foto)
-                                                                <img src="{{ asset('uploads/foto/' . $karyawan->foto) }}"
-                                                                    alt="Foto Profil" class="img-thumbnail mt-2"
-                                                                    width="150">
-                                                            @else
-                                                                <img src="{{ asset('assets/img/avatars/default.png') }}"
-                                                                    alt="Foto Profil Default"
-                                                                    class="img-thumbnail mt-2" width="150">
-                                                            @endif
+                                                        @if (Auth::user()->karyawan->foto)
+                                                            <img src="{{ asset('uploads/foto/' . Auth::user()->karyawan->foto) }}"
+                                                                alt="Foto Profil" class="img-thumbnail mt-2" width="150">
                                                         @else
-                                                            <img src="../assets/img/avatars/1.png" alt
-                                                                class="w-px-40 h-auto rounded-circle" />
+                                                            <img src="{{ asset('assets/img/avatars/default.png') }}"
+                                                                alt="Foto Profil Default" class="img-thumbnail mt-2"
+                                                                width="150">
                                                         @endif
+                                                    @else
+                                                        <img src="../assets/img/avatars/1.png" alt
+                                                            class="w-px-40 h-auto rounded-circle" />
+                                                    @endif
 
                                                     </div>
                                                 </div>

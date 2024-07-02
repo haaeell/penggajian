@@ -6,11 +6,23 @@
             <h3 class="fw-bold">Karyawan</h3>
             <div class="card shadow border-0">
                 <div class="col-md-3">
-                   @if (Auth::user()->role == 'admin' )
-                   <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
-                   data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
-               </button>
-                   @endif
+                    @if (Auth::user()->role == 'admin' )
+                        <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
+                            data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
+                        </button>
+                       <div class="card m-3">
+                           <div class="card-body">
+                            <form action="{{ route('import.karyawan') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Pilih file Excel</label>
+                                    <input type="file" name="file" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary"> <i class="bi bi-upload"></i> Import Karyawan</button>
+                            </form>
+                           </div>
+                       </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -27,7 +39,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -163,7 +175,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
@@ -174,13 +185,30 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('getKaryawan') }}',
-                columns: [
-                    { data: 'nik', name: 'nik' },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'jabatan', name: 'jabatan' },
-                    { data: 'tanggal_bergabung', name: 'tanggal_bergabung' },
-                    { data: 'no_hp', name: 'no_hp' },
+                columns: [{
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'jabatan',
+                        name: 'jabatan'
+                    },
+                    {
+                        data: 'tanggal_bergabung',
+                        name: 'tanggal_bergabung'
+                    },
+                    {
+                        data: 'no_hp',
+                        name: 'no_hp'
+                    },
                     {
                         data: 'id',
                         name: 'id',
@@ -192,7 +220,7 @@
                             `;
                             if ({{ Auth::user()->role == 'admin' ? 'true' : 'false' }}) {
                                 actionButtons += `
-                                    <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan"><i class="bi bi-pencil"></i></button>
                                     <button class="btn rounded-pill btn-danger btn-sm btn-delete" data-id="${data}"><i class="bi bi-trash"></i></button>
                                 `;
                             }
@@ -254,6 +282,32 @@
                     },
                     error: function(xhr) {
                         toastr.error(xhr.responseJSON.message);
+                    }
+                });
+            });
+
+            $('#karyawan-table').on('click', '.btn-edit', function() {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '/karyawan/' + id + '/edit',
+                    type: 'GET',
+                    success: function(response) {
+                        $('#karyawan_id').val(response.karyawan.id);
+                        $('#name').val(response.karyawan.user.name);
+                        $('#email').val(response.karyawan.user.email);
+                        $('#nik').val(response.karyawan.nik);
+                        $('#jabatan_id').val(response.karyawan.jabatan_id);
+                        $('#tanggal_bergabung').val(response.karyawan.tanggal_bergabung);
+                        $('#no_hp').val(response.karyawan.no_hp);
+                        $('#no_rekening').val(response.karyawan.no_rekening);
+                        $('#alamat').val(response.karyawan.alamat);
+                        $('#tanggal_lahir').val(response.karyawan.tanggal_lahir);
+                        $('#tempat_lahir').val(response.karyawan.tempat_lahir);
+                        $('#jenis_kelamin').val(response.karyawan.jenis_kelamin);
+                        $('#modalTambahKaryawan').modal('show');
+                    },
+                    error: function(xhr) {
+                        toastr.error('Gagal memuat data karyawan untuk diedit.');
                     }
                 });
             });

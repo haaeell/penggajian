@@ -14,8 +14,9 @@ class Penggajian extends Model
     protected $fillable = [
         'karyawan_id',
         'potong_gaji_id',
-        'absensi_id',
-        'bulan_gaji',
+        'bulan',
+        'total_penghasilan' ,
+        'total_potongan',
         'gaji_bersih',
         'status',
     ];

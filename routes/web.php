@@ -52,4 +52,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile/edit', [ProfilController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update/{id}', [ProfilController::class, 'update'])->name('profile.update');
+
+    Route::post('/import-karyawan', [KaryawanController::class, 'import'])->name('import.karyawan');
+    Route::post('/import-absensi', [AbsensiController::class, 'import'])->name('import.absensi');
+
 });

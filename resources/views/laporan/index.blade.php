@@ -3,7 +3,7 @@
 @section('content') 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="fw-bold">Laporan</h3>
+        <h3 class="fw-bold">Laporan Penggajian Karyawan</h3>
         <div class="card shadow border-0 mb-3">
             <div class="card-body">
                 <form action="{{ route('laporan.index') }}" method="GET">
@@ -35,18 +35,6 @@
                             
                         </div>
                         
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Laporan</label>
-                                <select class="form-select" name="laporan">
-                                    <option value="">Pilih Laporan</option>
-                                    <option value="data_karyawan" {{ request('laporan') == 'data_karyawan' ? 'selected' : '' }}>Data Karyawan</option>
-                                    <option value="data_jabatan" {{ request('laporan') == 'data_jabatan' ? 'selected' : '' }}>Data Jabatan</option>
-                                    <option value="data_absensi" {{ request('laporan') == 'data_absensi' ? 'selected' : '' }}>Data Absensi</option>
-                                    <!-- Tambahkan opsi laporan lainnya di sini -->
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 text-end">
@@ -79,9 +67,9 @@
                                         <td>{{ $data->karyawan->nik }}</td>
                                         <td>{{ $data->karyawan->user->name }}</td>
                                         <td>{{ $data->karyawan->jabatan->jabatan }}</td>
-                                        <td>Rp. {{ number_format($data->total_penghasilan, 2) }}</td>
-                                        <td>Rp. {{ number_format($data->total_potongan, 2) }}</td>
-                                        <td>Rp. {{ number_format($data->gaji_bersih, 2) }}</td>
+                                        <td>{{ ' Rp. ' . number_format($data->total_potongan, 0, ',', '.')}}</td>
+                                        <td>{{ ' Rp. ' . number_format($data->total_penghasilan, 0, ',', '.')}}</td>
+                                        <td>{{ ' Rp. ' . number_format($data->gaji_bersih, 0, ',', '.')}}</td>
                                         <td>{{ $data->bulan->translatedFormat('F Y') }}</td>
                                     </tr>
                                 @endforeach
