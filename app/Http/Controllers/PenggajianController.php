@@ -24,8 +24,8 @@ class PenggajianController extends Controller
     $bulan = $request->bulan;
     $tahun = $request->tahun;
 
+    // Logika untuk mengambil data gaji karyawan
     if (auth()->user()->role == 'karyawan') {
-        // Jika peran pengguna adalah karyawan, hanya ambil data gaji miliknya
         $karyawans = Karyawan::with([
             'user',
             'jabatan',
@@ -40,7 +40,6 @@ class PenggajianController extends Controller
         })
         ->get();
     } else {
-        // Jika peran pengguna selain karyawan, ambil semua data gaji
         $karyawans = Karyawan::with([
             'user',
             'jabatan',
@@ -157,33 +156,54 @@ class PenggajianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $karyawan = Karyawan::with(['user', 'jabatan', 'absensi', 'potonganGaji.jenisPotonganGaji'])->findOrFail($id);
-        $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
-        $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
-        $uang_makan = $karyawan->jabatan->uang_makan;
+    public function show($id, Request $request)
+{
+    $bulan = $request->get('bulan');
+    $tahun = $request->get('tahun');
 
-        $hadir = $karyawan->absensi->sum('hadir');
-        $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
+    // Ambil data karyawan dengan absensi dan potongan gaji berdasarkan bulan dan tahun
+    $karyawan = Karyawan::with([
+        'user',
+        'jabatan',
+        'absensi' => function ($query) use ($bulan, $tahun) {
+            $query->where('bulan', $bulan)->where('tahun', $tahun);
+        },
+        'potonganGaji.jenisPotonganGaji'
+    ])->findOrFail($id);
 
-        $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
-        $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
+    // Menghitung gaji per hari, tunjangan, dan uang makan
+    $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
+    $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
+    $uang_makan = $karyawan->jabatan->uang_makan;
 
-        return response()->json([
-            'karyawan' => $karyawan,
-            'gaji_per_hari' => $gaji_per_hari,
-            'tunjangan_transportasi' => $tunjangan_transportasi,
-            'uang_makan' => $uang_makan,
-            'hadir' => $hadir,
-            'gaji_kotor' => $gaji_kotor,
-            'total_potongan_gaji' => $total_potongan_gaji,
-            'gaji_bersih' => $gaji_bersih,
-            'jenis_potongan' => $karyawan->potonganGaji->flatMap(function ($potongan) {
-                return $potongan->jenisPotonganGaji;
-            }),
-        ]);
-    }
+    // Menghitung jumlah hadir berdasarkan data absensi yang difilter
+    $hadir = $karyawan->absensi->sum('hadir');
+    
+    // Menghitung gaji kotor
+    $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
+
+    // Menghitung total potongan gaji
+    $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
+
+    // Menghitung gaji bersih
+    $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
+
+    return response()->json([
+        'karyawan' => $karyawan,
+        'bulan' => $bulan,
+        'tahun' => $tahun,
+        'gaji_per_hari' => $gaji_per_hari,
+        'tunjangan_transportasi' => $tunjangan_transportasi,
+        'uang_makan' => $uang_makan,
+        'hadir' => $hadir,
+        'gaji_kotor' => $gaji_kotor,
+        'total_potongan_gaji' => $total_potongan_gaji,
+        'gaji_bersih' => $gaji_bersih,
+        'jenis_potongan' => $karyawan->potonganGaji->flatMap(function ($potongan) {
+            return $potongan->jenisPotonganGaji;
+        }),
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.

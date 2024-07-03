@@ -16,16 +16,15 @@ class JenisPotonganGaji extends Model
         'jumlah',
     ];
 
-
-    // public function karyawan()
-    // {
-    //     return $this->belongsToMany(Karyawan::class, 'karyawan_jenis_potongan_gaji', 'jenis_potongan_gaji_id', 'karyawan_id')
-    //                 ->withPivot('jumlah')
-    //                 ->withTimestamps();
-    // }
     public function potonganGaji()
     {
         return $this->belongsToMany(PotonganGaji::class, 'karyawan_jenis_potongan_gaji', 'jenis_potongan_gaji_id', 'potongan_gaji_id')
                     ->withTimestamps();
     }
+
+    public function getJumlahAttribute($value)
+    {
+        return number_format($value, 0, ',', '.');
+    }
 }
+

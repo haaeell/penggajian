@@ -45,16 +45,22 @@ class JenisPotonganGajiController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'jenis_potongan' => 'required|string|max:255',
-        'jumlah' => 'required|numeric',
-    ]);
+    {
+        $request->validate([
+            'jenis_potongan' => 'required|string|max:255',
+            'jumlah' => 'required|string', // Ubah validasi 'numeric' menjadi 'string'
+        ]);
 
-    $jenisPotonganGaji = JenisPotonganGaji::create($request->all());
+        // Hapus format rupiah dari jumlah
+        $jumlah = str_replace(['Rp.', '.', ','], '', $request->jumlah);
 
-    return response()->json(['success' => 'Jenis potongan gaji ditambahkan dengan sukses.']);
-}
+        $jenisPotonganGaji = JenisPotonganGaji::create([
+            'jenis_potongan' => $request->jenis_potongan,
+            'jumlah' => $jumlah,
+        ]);
+
+        return response()->json(['success' => 'Jenis potongan gaji ditambahkan dengan sukses.']);
+    }
 
     /**
      * Display the specified resource.
@@ -80,13 +86,19 @@ class JenisPotonganGajiController extends Controller
     {
         $request->validate([
             'jenis_potongan' => 'required|string|max:255',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required|string', // Ubah validasi 'numeric' menjadi 'string'
         ]);
 
-        $jenisPotonganGaji = JenisPotonganGaji::find($id);
-        $jenisPotonganGaji->update($request->all());
+        // Hapus format rupiah dari jumlah
+        $jumlah = str_replace(['Rp.', '.', ','], '', $request->jumlah);
 
-        return response()->json(['success' => 'Jenis Potongan Gaji updated successfully.']);
+        $jenisPotonganGaji = JenisPotonganGaji::findOrFail($id);
+        $jenisPotonganGaji->update([
+            'jenis_potongan' => $request->jenis_potongan,
+            'jumlah' => $jumlah,
+        ]);
+
+        return response()->json(['success' => 'Jenis potongan gaji diperbarui dengan sukses.']);
     }
 
     /**

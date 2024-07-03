@@ -26,6 +26,16 @@
             <div class="col-md-12">
                 <div class="card shadow border-0">
                     <div class="card-body">
+                        <div class="col-md-3 mb-3">
+                            <form action="{{ route('import.absensi') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="file">Import File Absensi</label>
+                                    <input type="file" class="form-control" name="file" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-upload"></i> Import</button>
+                            </form>
+                        </div>
                         <form action="{{ route('absensi.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-md-3">
@@ -58,6 +68,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-6 d-flex align-items-end">
                                     <button type="submit" class="btn rounded-pill" style="background-color: #28a745; color: white; border-color: #28a745;">
                                         <i class="bi bi-search"></i> Tampilkan Absensi
