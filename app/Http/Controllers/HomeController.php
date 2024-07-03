@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Jabatan;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $karyawan = Auth::user()->karyawan;
+        $jabatanCount = Jabatan::count();
+        $karyawanCount = Karyawan::count();
+        return view('home', compact('jabatanCount', 'karyawanCount','karyawan'));
     }
 }

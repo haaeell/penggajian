@@ -7,6 +7,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PotonganGajiController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,5 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('laporan', LaporanController::class);
     Route::resource('users', UserController::class);
     Route::get('get-users', [UserController::class, 'getUsers'])->name('getUsers');
-    
+
+    Route::get('/profile/edit', [ProfilController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update/{id}', [ProfilController::class, 'update'])->name('profile.update');
 });

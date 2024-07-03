@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Karyawan;
 use App\Models\Penggajian;
 use App\Models\PotonganGaji;
@@ -16,6 +18,9 @@ class PenggajianController extends Controller
      */
     public function index(Request $request)
 {
+    $karyawan = Auth::user()->karyawan;
+
+    
     $bulan = $request->bulan;
     $tahun = $request->tahun;
 
@@ -75,7 +80,7 @@ class PenggajianController extends Controller
         ];
     }
 
-    return view('penggajian.index', compact('penggajianData'));
+    return view('penggajian.index', compact('penggajianData','karyawan'));
 }
 
 

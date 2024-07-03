@@ -23,7 +23,6 @@
                                     <th>Email</th>
                                     <th>Jabatan</th>
                                     <th>Tanggal Bergabung</th>
-                                    <th>No HP</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -181,7 +180,6 @@
                     { data: 'email', name: 'email' },
                     { data: 'jabatan', name: 'jabatan' },
                     { data: 'tanggal_bergabung', name: 'tanggal_bergabung' },
-                    { data: 'no_hp', name: 'no_hp' },
                     {
                         data: 'id',
                         name: 'id',
