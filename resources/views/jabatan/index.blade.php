@@ -48,15 +48,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="gaji_per_hari" class="form-label">Gaji per hari</label>
-                        <input type="number" class="form-control" id="gaji_per_hari" name="gaji_per_hari" required>
+                        <input type="text" class="form-control rupiah-input" id="gaji_per_hari" name="gaji_per_hari" required>
                     </div>
                     <div class="mb-3">
                         <label for="tunjangan_transportasi" class="form-label">Tunjangan Transportasi</label>
-                        <input type="number" class="form-control" id="tunjangan_transportasi" name="tunjangan_transportasi" required>
+                        <input type="text" class="form-control rupiah-input" id="tunjangan_transportasi" name="tunjangan_transportasi" required>
                     </div>
                     <div class="mb-3">
                         <label for="uang_makan" class="form-label">Uang Makan</label>
-                        <input type="number" class="form-control" id="uang_makan" name="uang_makan" required>
+                        <input type="text" class="form-control rupiah-input" id="uang_makan" name="uang_makan" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -90,88 +90,123 @@
 
 @push('scripts')
 <script>
-   $(document).ready(function() {
-    var table = $('#jabatans-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('getJabatans') }}',
-        columns: [
-            { data: 'jabatan', name: 'jabatan' },
-            { data: 'gaji_per_hari', name: 'gaji_per_hari' },
-            { data: 'tunjangan_transportasi', name: 'tunjangan_transportasi' },
-            { data: 'uang_makan', name: 'uang_makan' },
-            { data: 'id', name: 'id', orderable: false, searchable: false, render: function(data, type, row) {
-                return `
-                    <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
-                    <button class="btn rounded-pill btn-danger btn-sm btn-delete" data-id="${data}"><i class="bi bi-trash"></i></button>
-                `;
-            }},
-        ]
-    });
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-    $('#btn-add').click(function() {
-        $('#jabatanForm').trigger("reset");
-        $('#jabatanModalLabel').html("Tambah Jabatan");
-        $('#btn-save').html("Tambah");
-        $('#jabatanModal').modal('show');
-    });
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
 
-    $('body').on('click', '.btn-edit', function() {
-        var id = $(this).data('id');
-        $.get('jabatans/' + id + '/edit', function(data) {
-            $('#jabatanModalLabel').html("Edit Jabatan");
-            $('#btn-save').html("Update");
-            $('#jabatan_id').val(data.id);
-            $('#jabatan').val(data.jabatan);
-            $('#gaji_per_hari').val(data.gaji_per_hari);
-            $('#tunjangan_transportasi').val(data.tunjangan_transportasi);
-            $('#uang_makan').val(data.uang_makan);
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+
+    $(document).ready(function() {
+        var table = $('#jabatans-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('getJabatans') }}',
+            columns: [
+                { data: 'jabatan', name: 'jabatan' },
+                { data: 'gaji_per_hari', name: 'gaji_per_hari', render: function(data, type, row) {
+                    return formatRupiah(data.toString(), 'Rp. ');
+                }},
+                { data: 'tunjangan_transportasi', name: 'tunjangan_transportasi', render: function(data, type, row) {
+                    return formatRupiah(data.toString(), 'Rp. ');
+                }},
+                { data: 'uang_makan', name: 'uang_makan', render: function(data, type, row) {
+                    return formatRupiah(data.toString(), 'Rp. ');
+                }},
+                { data: 'id', name: 'id', orderable: false, searchable: false, render: function(data, type, row) {
+                    return `
+                        <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
+                        <button class="btn rounded-pill btn-danger btn-sm btn-delete" data-id="${data}"><i class="bi bi-trash"></i></button>
+                    `;
+                }},
+            ]
+        });
+
+        $('#btn-add').click(function() {
+            $('#jabatanForm').trigger("reset");
+            $('#jabatanModalLabel').html("Tambah Jabatan");
+            $('#btn-save').html("Tambah");
             $('#jabatanModal').modal('show');
-        })
-    });
+        });
 
-    $('#jabatanForm').submit(function(e) {
-        e.preventDefault();
-        var id = $('#jabatan_id').val();
-        var url = id ? 'jabatans/' + id : 'jabatans';
-        var type = id ? 'PUT' : 'POST';
+        $('body').on('click', '.btn-edit', function() {
+            var id = $(this).data('id');
+            $.get('jabatans/' + id + '/edit', function(data) {
+                $('#jabatanModalLabel').html("Edit Jabatan");
+                $('#btn-save').html("Update");
+                $('#jabatan_id').val(data.id);
+                $('#jabatan').val(data.jabatan);
+                $('#gaji_per_hari').val(formatRupiah(data.gaji_per_hari.toString(), 'Rp. '));
+                $('#tunjangan_transportasi').val(formatRupiah(data.tunjangan_transportasi.toString(), 'Rp. '));
+                $('#uang_makan').val(formatRupiah(data.uang_makan.toString(), 'Rp. '));
+                $('#jabatanModal').modal('show');
+            })
+        });
 
-        $.ajax({
-            url: url,
-            type: type,
-            data: $(this).serialize(),
-            success: function(response) {
-                $('#jabatanModal').modal('hide');
-                table.ajax.reload();
-                toastr.success(response.success);
-            },
-            error: function(response) {
-                toastr.error('Something went wrong!');
-            }
+        $('#jabatanForm').submit(function(e) {
+            e.preventDefault();
+            var id = $('#jabatan_id').val();
+            var url = id ? 'jabatans/' + id : 'jabatans';
+            var type = id ? 'PUT' : 'POST';
+
+            // Convert Rupiah format back to numbers for submission
+            var gajiPerHari = $('#gaji_per_hari').val().replace(/[^,\d]/g, '');
+            var tunjanganTransportasi = $('#tunjangan_transportasi').val().replace(/[^,\d]/g, '');
+            var uangMakan = $('#uang_makan').val().replace(/[^,\d]/g, '');
+            $('#gaji_per_hari').val(gajiPerHari);
+            $('#tunjangan_transportasi').val(tunjanganTransportasi);
+            $('#uang_makan').val(uangMakan);
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#jabatanModal').modal('hide');
+                    table.ajax.reload();
+                    toastr.success(response.success);
+                },
+                error: function(response) {
+                    toastr.error('Something went wrong!');
+                }
+            });
+        });
+
+        var deleteId;
+        $('body').on('click', '.btn-delete', function() {
+            deleteId = $(this).data('id');
+            $('#deleteModal').modal('show');
+        });
+
+        $('#btn-confirm-delete').click(function() {
+            $.ajax({
+                url: 'jabatans/' + deleteId,
+                type: 'DELETE',
+                success: function(response) {
+                    $('#deleteModal').modal('hide');
+                    table.ajax.reload();
+                    toastr.success(response.success);
+                },
+                error: function(response) {
+                    toastr.error('Something went wrong!');
+                }
+            });
+        });
+
+        // Format Rupiah in input fields
+        $('body').on('input', '.rupiah-input', function() {
+            var value = $(this).val();
+            $(this).val(formatRupiah(value, 'Rp. '));
         });
     });
-
-    var deleteId;
-    $('body').on('click', '.btn-delete', function() {
-        deleteId = $(this).data('id');
-        $('#deleteModal').modal('show');
-    });
-
-    $('#btn-confirm-delete').click(function() {
-        $.ajax({
-            url: 'jabatans/' + deleteId,
-            type: 'DELETE',
-            success: function(response) {
-                $('#deleteModal').modal('hide');
-                table.ajax.reload();
-                toastr.success(response.success);
-            },
-            error: function(response) {
-                toastr.error('Something went wrong!');
-            }
-        });
-    });
-});
-
 </script>
 @endpush
