@@ -6,12 +6,23 @@
             <h3 class="fw-bold">Karyawan</h3>
             <div class="card shadow border-0">
                 <div class="col-md-3">
-                   @if (Auth::user()->role == 'admin' )
-                   <button class="btn rounded-pill mx-3 mt-3" style="background-color: #28a745; color: white; border-color: #28a745;" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan">
-                    <i class="bi bi-plus"></i> Tambah Karyawan
-                </button>
-                
-                   @endif
+                    @if (Auth::user()->role == 'admin' )
+                        <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
+                            data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
+                        </button>
+                       <div class="card m-3">
+                           <div class="card-body">
+                            <form action="{{ route('import.karyawan') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Pilih file Excel</label>
+                                    <input type="file" name="file" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary"> <i class="bi bi-upload"></i> Import Karyawan</button>
+                            </form>
+                           </div>
+                       </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -23,6 +34,7 @@
                                     <th>Email</th>
                                     <th>Jabatan</th>
                                     <th>Tanggal Bergabung</th>
+                                    <th>No HP</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -173,12 +185,30 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('getKaryawan') }}',
-                columns: [
-                    { data: 'nik', name: 'nik' },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'jabatan', name: 'jabatan' },
-                    { data: 'tanggal_bergabung', name: 'tanggal_bergabung' },
+                columns: [{
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'jabatan',
+                        name: 'jabatan'
+                    },
+                    {
+                        data: 'tanggal_bergabung',
+                        name: 'tanggal_bergabung'
+                    },
+                    {
+                        data: 'no_hp',
+                        name: 'no_hp'
+                    },
                     {
                         data: 'id',
                         name: 'id',
