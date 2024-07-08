@@ -5,22 +5,32 @@
         <div class="col-md-12">
             <h3 class="fw-bold">Karyawan</h3>
             <div class="card shadow border-0">
-                <div class="col-md-3">
+                <div class="col-md-12">
                     @if (Auth::user()->role == 'admin' )
-                        <button class="btn rounded-pill btn-primary mx-3 mt-3" data-bs-toggle="modal"
-                            data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
-                        </button>
+                       <div class="d-flex justify-content-between align-items-center" >
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button class="btn rounded-pill btn-primary mx-3 mt-3" style="background-color: #28a745; border-color: #28a745;" data-bs-toggle="modal"
+                                        data-bs-target="#modalTambahKaryawan"><i class="bi bi-plus"></i> Tambah Karyawan
+                                </button>
+                            </div>
+                        </div>                        
                        <div class="card m-3">
-                           <div class="card-body">
-                            <form action="{{ route('import.karyawan') }}" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <form action="{{ route('import.karyawan') }}" method="POST" enctype="multipart/form-data" class="row g-3 align-items-center">
                                 @csrf
-                                <div class="mb-3">
+                                <div class="col-auto">
                                     <label for="file" class="form-label">Pilih file Excel</label>
-                                    <input type="file" name="file" class="form-control" required>
+                                    <input type="file" name="file" class="form-control" id="file" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary"> <i class="bi bi-upload"></i> Import Karyawan</button>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mt-4" style="background-color: #28a745; border-color: #28a745;"><i class="bi bi-upload"></i> Import Karyawan</button>
+                                </div>
+                                
                             </form>
-                           </div>
+                        </div>
+                    </div>
+                    
                        </div>
                     @endif
                 </div>
@@ -63,14 +73,23 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name">
+                            @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="nik" class="form-label">NIK</label>
-                            <input type="text" class="form-control" id="nik" name="nik">
+                            <input type="number" class="form-control" id="nik" name="nik">
+                            @error('nik')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="jabatan_id" class="form-label">Jabatan</label>
@@ -79,30 +98,51 @@
                                     <option value="{{ $jabatan->id }}">{{ $jabatan->jabatan }}</option>
                                 @endforeach
                             </select>
+                            @error('jabatan_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_bergabung" class="form-label">Tanggal Bergabung</label>
                             <input type="date" class="form-control" id="tanggal_bergabung" name="tanggal_bergabung">
+                            @error('tanggal_bergabung')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No HP</label>
-                            <input type="text" class="form-control" id="no_hp" name="no_hp">
+                            <input type="number" class="form-control" id="no_hp" name="no_hp">
+                            @error('no_hp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="no_rekening" class="form-label">No Rekening</label>
-                            <input type="text" class="form-control" id="no_rekening" name="no_rekening">
+                            <input type="number" class="form-control" id="no_rekening" name="no_rekening">
+                            @error('no_rekening')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="alamat" name="alamat">
+                            @error('alamat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
                             <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
+                            @error('tanggal_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                             <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir">
+                            @error('tempat_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="mb-3">
                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
@@ -110,12 +150,16 @@
                                 <option value="laki-laki">Laki-Laki</option>
                                 <option value="perempuan">Perempuan</option>
                             </select>
+                            @error('jenis_kelamin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="simpanBtn">Simpan</button>
+                        <button type="submit" class="btn btn-primary" id="simpanBtn" style="background-color: #28a745; border-color: #28a745;">Simpan</button>
                     </div>
+                    
                 </form>
             </div>
         </div>

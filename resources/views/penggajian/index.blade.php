@@ -178,43 +178,73 @@
                         var namaBulanString = namaBulan[data.bulan - 1];
                         data.jenis_potongan.forEach(function(jenis) {
                             jenisPotonganHtml +=
-                                `<p class="m-0">${jenis.jenis_potongan}: ${number_format(jenis.jumlah)}</p>`;
+                                `
+                                  <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;"><strong>${jenis.jenis_potongan}:</strong></td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(jenis.jumlah)}</strong></td>
+                </tr>
+                                `;
                         });
 
                         var detailHtml = `
-                        <div class="struk-gaji">
-                            <h5 class="text-center">Klinik NU Muntilan</h5>
-                            <p class="text-center">Jl. Watucongol, Kec. Santren Gunungpring, Magelang</p>
-                            <hr>
-                            <h5 class="text-center">Slip Gaji Karyawan </h5>
-                             <p class="m-0"><strong>Bulan:</strong> ${namaBulanString} ${data.tahun}</p>
-                            <p class="m-0"><strong>Nama:</strong> ${data.karyawan.user.name}</p>
-                            <p class="m-0"><strong>Jabatan:</strong> ${data.karyawan.jabatan.jabatan}</p>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Penghasilan:</strong></p>
-                                   
-                                    <p class="m-0">Total Hadir: ${data.hadir}</p>
-                                    <p class="m-0">Gaji Perhari: ${number_format(data.gaji_per_hari) }</p>
-                                    <p class="m-0"> Gaji Pokok: ${number_format(data.gaji_per_hari * data.hadir)}</p>
-                                    <p class="m-0">Tunjangan Transportasi: ${number_format(data.tunjangan_transportasi)}</p>
-                                    <p class="m-0">Uang Makan: ${number_format(data.uang_makan)}</p>
-                                    <p class="m-0"><strong>Total Penghasilan: ${number_format(data.gaji_kotor)}</strong></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Potongan:</strong></p>
-                                    ${jenisPotonganHtml}
-                                    <p><strong>Total Potongan: ${number_format(data.total_potongan_gaji)}</strong></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <h5><strong>Gaji Bersih: ${number_format(data.gaji_bersih)}</strong></h5>
-                            <hr>
-                            <p>Magelang,{{ now()->locale('id')->isoFormat('D MMMM YYYY') }}</p>
-                            <p>Penerima: ${data.karyawan.user.name}</p>
-                            <p>Manajer Keuangan</p>
-                        </div>
+                      <div class="struk-gaji">
+    <h5 class="text-center">Klinik NU Muntilan</h5>
+    <p class="text-center">Jl. Watucongol, Kec. Santren Gunungpring, Magelang</p>
+    <hr>
+    <h5 class="text-center">Slip Gaji Karyawan</h5>
+    <p class="m-0"><strong>Bulan:</strong> ${namaBulanString} ${data.tahun}</p>
+    <p class="m-0"><strong>Nama:</strong> ${data.karyawan.user.name}</p>
+    <p class="m-0"><strong>Jabatan:</strong> ${data.karyawan.jabatan.jabatan}</p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Penghasilan:</strong></p>
+            <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;">Kehadiran :</td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;">${data.hadir} hari x ${number_format(data.gaji_per_hari)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;">Gaji Pokok:</td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;">= ${number_format(data.gaji_per_hari * data.hadir)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;">Tunjangan Transportasi:</td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;">${number_format(data.tunjangan_transportasi)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;">Uang Makan:</td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;">${number_format(data.uang_makan)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;">Tunjangan Jabatan:</td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;">${number_format(data.tunjangan_jabatan)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;"><strong>Total Penghasilan:</strong></td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(data.gaji_kotor)}</strong></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Potongan:</strong></p>
+            <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">
+                ${jenisPotonganHtml} <!-- Di sini Anda bisa memasukkan kode PHP atau HTML untuk menampilkan jenis potongan -->
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;"><strong>Total Potongan:</strong></td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(data.total_potongan_gaji)}</strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <h5><strong>Gaji Bersih: ${number_format(data.gaji_bersih)}</strong></h5>
+    <hr>
+    <p>Magelang,{{ now()->locale('id')->isoFormat('D MMMM YYYY') }}</p>
+    <p>Penerima: ${data.karyawan.user.name}</p>
+    <p class="mt-5">SDM</p>
+</div>
+
                     `;
                         modal.find('.modal-body').html(detailHtml);
                     }

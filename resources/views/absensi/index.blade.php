@@ -26,14 +26,16 @@
             <div class="col-md-12">
                 <div class="card shadow border-0">
                     <div class="card-body">
-                        <div class="col-md-3 mb-3">
-                            <form action="{{ route('import.absensi') }}" method="POST" enctype="multipart/form-data">
+                        <div class="col-md-12 mb-3">
+                            <form action="{{ route('import.absensi') }}" class="row g-3 align-items-center" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="form-group">
+                                <div class="col-auto">
                                     <label for="file">Import File Absensi</label>
                                     <input type="file" class="form-control" name="file" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-2"><i class="bi bi-upload"></i> Import</button>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mt-4" style="background-color: #28a745; border-color: #28a745;"><i class="bi bi-upload"></i> Import</button>
+                                </div>                                
                             </form>
                         </div>
                         <form action="{{ route('absensi.index') }}" method="GET">

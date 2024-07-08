@@ -20,6 +20,7 @@
                                 <th class="text-start">Gaji per hari</th>
                                 <th class="text-start">Tunjangan Transportasi</th>
                                 <th class="text-start">Uang Makan</th>
+                                <th class="text-start">Tunjangan Jabatan</th>
                                 <th class="text-start">Aksi</th>
                             </tr>
                         </thead>
@@ -58,10 +59,14 @@
                         <label for="uang_makan" class="form-label">Uang Makan</label>
                         <input type="text" class="form-control rupiah-input" id="uang_makan" name="uang_makan" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="tunjangan_jabatan" class="form-label">Tunjangan Jabatan</label>
+                        <input type="text" class="form-control rupiah-input" id="tunjangan_jabatan" name="tunjangan_jabatan" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save"></button>
+                    <button type="submit" class="btn" id="btn-add" style="background-color: #28a745; color: white; border-color: #28a745;">Tambah</button>
                 </div>
             </form>
         </div>
@@ -122,6 +127,9 @@
                 { data: 'uang_makan', name: 'uang_makan', render: function(data, type, row) {
                     return formatRupiah(data.toString(), 'Rp. ');
                 }},
+                { data: 'tunjangan_jabatan', name: 'tunjangan_jabatan', render: function(data, type, row) {
+                    return formatRupiah(data.toString(), 'Rp. ');
+                }},
                 { data: 'id', name: 'id', orderable: false, searchable: false, render: function(data, type, row) {
                     return `
                         <button class="btn rounded-pill btn-warning btn-sm btn-edit" data-id="${data}"><i class="bi bi-pencil"></i></button>
@@ -148,6 +156,7 @@
                 $('#gaji_per_hari').val(formatRupiah(data.gaji_per_hari.toString(), 'Rp. '));
                 $('#tunjangan_transportasi').val(formatRupiah(data.tunjangan_transportasi.toString(), 'Rp. '));
                 $('#uang_makan').val(formatRupiah(data.uang_makan.toString(), 'Rp. '));
+                $('#tunjangan_jabatan').val(formatRupiah(data.tunjangan_jabatan.toString(), 'Rp. '));
                 $('#jabatanModal').modal('show');
             })
         });
@@ -162,9 +171,11 @@
             var gajiPerHari = $('#gaji_per_hari').val().replace(/[^,\d]/g, '');
             var tunjanganTransportasi = $('#tunjangan_transportasi').val().replace(/[^,\d]/g, '');
             var uangMakan = $('#uang_makan').val().replace(/[^,\d]/g, '');
+            var tunjanganJabatan = $('#tunjangan_jabatan').val().replace(/[^,\d]/g, '');
             $('#gaji_per_hari').val(gajiPerHari);
             $('#tunjangan_transportasi').val(tunjanganTransportasi);
             $('#uang_makan').val(uangMakan);
+            $('#tunjangan_jabatan').val(tunjanganJabatan);
 
             $.ajax({
                 url: url,

@@ -1,157 +1,124 @@
-
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-wide  customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free">
-
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
-    <title>Login</title>
-
-    
-    <meta name="description" content="Most Powerful &amp; Comprehensive Bootstrap 5 Admin Dashboard built for developers!" />
-    <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
-    <!-- Canonical SEO -->
-    <link rel="canonical" href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/">
-    
-    
-    <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5DDHKGP');</script>
-    <!-- End Google Tag Manager -->
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-    
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
-    
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
-    
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" /> 
-    
-
-    <!-- Page CSS -->
-    <!-- Page -->
-<link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css">
-
-    <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
-    
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sobat Industri</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Use min-height for full page height */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        .card {
+            border-radius: 15px;
+            margin-top: 2rem; /* Adjust the margin-top for card positioning */
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .input-group-text {
+            cursor: pointer;
+        }
+        .header-logo {
+            text-align: center; /* Center align the logo */
+            margin-bottom: 1cm; /* Margin bottom for spacing */
+        }
+        .header-logo img {
+            max-width: 100px;
+            margin-right: 1cm;
+        }
+        .row.justify-content-center {
+            margin-top: 0.5rem; /* Adjust the margin-top for the row */
+        }
+    </style>
 </head>
-
 <body>
-
-  
-  <!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  
-  <!-- Content -->
-
-<div class="container-xxl">
-  <div class="authentication-wrapper authentication-basic container-p-y">
-    <div class="authentication-inner">
-      <!-- Register -->
-      <div class="card">
-        <div class="card-body">
-          <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
-            @csrf
-            
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your email or username" autofocus>
-                @error('email')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        
-            <div class="mb-3 form-password-toggle">
-                <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                  
-                </div>
-                <div class="input-group input-group-merge">
-                    <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password">
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                </div>
-                @error('password')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="remember">
-                        Remember Me
-                    </label>
-                </div>
-            </div>
-        
-            <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-            </div>
-        </form>
+    <div class="container">
+        <div class="header-logo">
+            <img src="{{asset('assets/img/logo.png')}}" alt="Klinik NU Logo">
         </div>
-      </div>
-      <!-- /Register -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <img src="path/to/illustration.png" class="card-img" alt="Illustration">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">Klinik NU Muntilan</h5>
+                                <p class="card-text">Jl. Gunungpring, Ngasem, Gunungpring, Kec. Muntilan, Kabupaten Magelang</p>
+                                <form action="{{ route('login') }}" method="POST" id="formAuthentication">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required placeholder="Enter your email" autofocus>
+                                        @error('email')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-eye-slash"></i></span>
+                                            </div>
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex justify-content-between">
+                                        <a href="{{ route('password.request') }}">Forgot your password?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                    <div class="text-center mt-3">
+                                        <p>No account yet? <a href="{{ route('register') }}">Register</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
-<!-- / Content -->
-
-  <!-- Core JS -->
-  <!-- build:js assets/vendor/js/core.js -->
-  
-  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="../assets/vendor/libs/popper/popper.js"></script>
-  <script src="../assets/vendor/js/bootstrap.js"></script>
-  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="../assets/vendor/js/menu.js"></script>
-  
-  <!-- endbuild -->
-
-  <!-- Vendors JS -->
-  
-  
-
-  <!-- Main JS -->
-  <script src="../assets/js/main.js"></script>
-  
-
-  <!-- Page JS -->
-  
-  
-  
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.input-group-text').on('click', function() {
+                let passwordInput = $('#password');
+                if (passwordInput.attr('type') === 'password') {
+                    passwordInput.attr('type', 'text');
+                    $(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+                } else {
+                    passwordInput.attr('type', 'password');
+                    $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
-
-<!-- beautify ignore:end -->
-
-

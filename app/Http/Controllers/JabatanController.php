@@ -18,7 +18,7 @@ class JabatanController extends Controller
 
     public function getJabatans()
     {
-        $jabatans = Jabatan::select(['id', 'jabatan', 'gaji_per_hari', 'tunjangan_transportasi', 'uang_makan']);
+        $jabatans = Jabatan::select(['id', 'jabatan', 'gaji_per_hari', 'tunjangan_transportasi', 'uang_makan','tunjangan_jabatan']);
         return DataTables::of($jabatans)
             ->addColumn('action', function ($jabatan) {
                 return '
@@ -36,6 +36,7 @@ class JabatanController extends Controller
             'gaji_per_hari' => 'required|numeric',
             'tunjangan_transportasi' => 'required|numeric',
             'uang_makan' => 'required|numeric',
+            'tunjangan_jabatan' => 'required|numeric',
         ]);
 
         $jabatan = Jabatan::create($request->all());
@@ -50,6 +51,7 @@ class JabatanController extends Controller
             'gaji_per_hari' => 'required|numeric',
             'tunjangan_transportasi' => 'required|numeric',
             'uang_makan' => 'required|numeric',
+            'tunjangan_jabatan' => 'required|numeric',
         ]);
 
         $jabatan = Jabatan::find($id);

@@ -15,6 +15,7 @@ class Jabatan extends Model
         'gaji_per_hari',
         'tunjangan_transportasi',
         'uang_makan',
+        'tunjangan_jabatan',
     ];
 
     public function karyawan()
@@ -33,6 +34,10 @@ class Jabatan extends Model
     }
 
     public function getUangMakanAttribute($value)
+    {
+        return number_format($value, 0, '', '');
+    }
+    public function getTunjanganJabatanAttribute($value)
     {
         return number_format($value, 0, '', '');
     }

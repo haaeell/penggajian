@@ -53,7 +53,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="btn-save">Update</button>
+                    <button type="submit" class="btn btn-success" id="btn-save" style="background-color: #28a745; border-color: #28a745;">Update</button>
+
                 </div>
             </form>
         </div>

@@ -60,9 +60,10 @@ class PenggajianController extends Controller
         $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
         $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
         $uang_makan = $karyawan->jabatan->uang_makan;
+        $tunjangan_jabatan = $karyawan->jabatan->tunjangan_jabatan;
 
         $hadir = $karyawan->absensi->sum('hadir');
-        $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
+        $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan  + $tunjangan_jabatan;
 
         $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
         $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
@@ -72,6 +73,7 @@ class PenggajianController extends Controller
             'gaji_per_hari' => $gaji_per_hari,
             'tunjangan_transportasi' => $tunjangan_transportasi,
             'uang_makan' => $uang_makan,
+            'tunjangan_jabatan' => $tunjangan_jabatan,
             'hadir' => $hadir,
             'gaji_kotor' => $gaji_kotor,
             'total_potongan_gaji' => $total_potongan_gaji,
@@ -90,9 +92,11 @@ class PenggajianController extends Controller
         $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
         $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
         $uang_makan = $karyawan->jabatan->uang_makan;
+        $tunjangan_jabatan = $karyawan->jabatan->tunjangan_jabatan;
+
 
         $hadir = $karyawan->absensi->sum('hadir');
-        $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
+        $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan  + $tunjangan_jabatan;
 
         $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
         $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
@@ -102,6 +106,7 @@ class PenggajianController extends Controller
             'gaji_per_hari' => $gaji_per_hari,
             'tunjangan_transportasi' => $tunjangan_transportasi,
             'uang_makan' => $uang_makan,
+            'tunjangan_jabatan' => $tunjangan_jabatan,
             'hadir' => $hadir,
             'gaji_kotor' => $gaji_kotor,
             'total_potongan_gaji' => $total_potongan_gaji,
@@ -175,12 +180,13 @@ class PenggajianController extends Controller
     $gaji_per_hari = $karyawan->jabatan->gaji_per_hari;
     $tunjangan_transportasi = $karyawan->jabatan->tunjangan_transportasi;
     $uang_makan = $karyawan->jabatan->uang_makan;
+    $tunjangan_jabatan = $karyawan->jabatan->tunjangan_jabatan;
 
     // Menghitung jumlah hadir berdasarkan data absensi yang difilter
     $hadir = $karyawan->absensi->sum('hadir');
     
     // Menghitung gaji kotor
-    $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan;
+    $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan + $tunjangan_jabatan;
 
     // Menghitung total potongan gaji
     $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
@@ -195,6 +201,7 @@ class PenggajianController extends Controller
         'gaji_per_hari' => $gaji_per_hari,
         'tunjangan_transportasi' => $tunjangan_transportasi,
         'uang_makan' => $uang_makan,
+        'tunjangan_jabatan' => $tunjangan_jabatan,
         'hadir' => $hadir,
         'gaji_kotor' => $gaji_kotor,
         'total_potongan_gaji' => $total_potongan_gaji,

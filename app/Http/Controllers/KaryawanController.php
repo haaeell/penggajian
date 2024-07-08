@@ -72,6 +72,8 @@ class KaryawanController extends Controller
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required',
             'jenis_kelamin' => 'required',
+        ],[
+            'required' => ':attribute wajib diisi'
         ]);
 
         $user = User::firstOrCreate([
