@@ -18,7 +18,6 @@
         }
         .card {
             border-radius: 15px;
-            margin-top: 2rem; /* Adjust the margin-top for card positioning */
         }
         .card-body {
             padding: 2rem;
@@ -35,15 +34,10 @@
             cursor: pointer;
         }
         .header-logo {
-            text-align: center; /* Center align the logo */
-            margin-bottom: 1cm; /* Margin bottom for spacing */
+            text-align: center; 
         }
         .header-logo img {
-            max-width: 100px;
-            margin-right: 1cm;
-        }
-        .row.justify-content-center {
-            margin-top: 0.5rem; /* Adjust the margin-top for the row */
+            max-width: 200px;
         }
     </style>
 </head>
@@ -54,8 +48,8 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="row no-gutters">
+                <div class="card mb-4 border-0 shadow">
+                    <div class="row">
                         <div class="col-md-6">
                             <img src="path/to/illustration.png" class="card-img" alt="Illustration">
                         </div>

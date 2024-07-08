@@ -108,12 +108,7 @@
                                 Data Jabatan
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
-                            <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-clipboard-data"></i>
-                                Absensi
-                            </a>
-                        </li>
+                       
 
                         <li
                             class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
@@ -135,15 +130,22 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
+                            <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-clipboard2-data"></i>
+                                Penggajian
+                            </a>
+                        </li>
                     @endif
-                    <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
-                        <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-clipboard2-data"></i>
-                            Penggajian
-                        </a>
-                    </li>
+                    
 
                     @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
+                    <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
+                        <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-clipboard-data"></i>
+                            Absensi
+                        </a>
+                    </li>
                         <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                             <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
                                 <i class="bi bi-bar-chart"></i>
