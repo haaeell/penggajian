@@ -65,7 +65,7 @@
                      
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary" style="background-color: #28a745; border-color: #28a745;">Simpan</button>
                     </form>
                 </div>
             </div>
