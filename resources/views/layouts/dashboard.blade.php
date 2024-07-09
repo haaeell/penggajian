@@ -90,7 +90,7 @@
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'pimpinan')
                         <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
                             <a href="/home" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <i class="menu-icon tf-icons bi bi-house"></i>
                                 <div data-i18n="Analytics">Dashboard</div>
                             </a>
                         </li>
@@ -104,16 +104,22 @@
                     @if (Auth::user()->role == 'admin')
                         <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
                             <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-database-add"></i>
+                                <i class="bi bi-person-workspace"></i>
                                 Data Jabatan
                             </a>
                         </li>
-                       
+                        @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
+                        <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
+                            <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
+                                <i class="bi bi-journal-check"></i>
+                                Absensi
+                            </a>
+                        </li>
 
                         <li
                             class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
-                                <i class="bi bi-building-add"></i>
+                                <i class="bi bi-clipboard2-minus-fill"></i>
                                 Potongan Gaji
                             </a>
                             <ul class="menu-sub">
@@ -132,23 +138,17 @@
                         </li>
                         <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
                             <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-clipboard2-data"></i>
+                                <i class="bi bi-calculator"></i>
                                 Penggajian
                             </a>
                         </li>
                     @endif
                     
 
-                    @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
-                    <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
-                        <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
-                            <i class="bi bi-clipboard-data"></i>
-                            Absensi
-                        </a>
-                    </li>
+                  
                         <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                             <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-bar-chart"></i>
+                                <i class="bi bi-clipboard2-data"></i>
                                 Laporan
                             </a>
                         </li>
@@ -156,7 +156,7 @@
                     @if (Auth::user()->role == 'admin')
                         <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-person"></i>
+                                <i class="bi bi-person-fill-add"></i>
                                 Users
                             </a>
                         </li>

@@ -12,12 +12,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Use min-height for full page height */
-            margin: 0; /* Remove default margin */
-            padding: 0; /* Remove default padding */
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         .card {
             border-radius: 15px;
+            overflow: hidden;
         }
         .card-body {
             padding: 2rem;
@@ -33,30 +34,34 @@
         .input-group-text {
             cursor: pointer;
         }
-        .header-logo {
-            text-align: center; 
+        .image-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
-        .header-logo img {
-            max-width: 200px;
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .form-section {
+            padding: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header-logo">
-            <img src="{{asset('assets/img/logo.png')}}" alt="Klinik NU Logo">
-        </div>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card mb-4 border-0 shadow">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="path/to/illustration.png" class="card-img" alt="Illustration">
+                    <div class="row no-gutters">
+                        <div class="col-md-6 image-section">
+                            <img src="{{asset('assets/img/poster.png')}}" alt="Poster Image"> <!-- Update with the correct path to your image -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 form-section">
                             <div class="card-body">
-                                <h5 class="card-title">Klinik NU Muntilan</h5>
-                                <p class="card-text">Jl. Gunungpring, Ngasem, Gunungpring, Kec. Muntilan, Kabupaten Magelang</p>
+                                <h2 class="card-title">LOGIN</h2>
                                 <form action="{{ route('login') }}" method="POST" id="formAuthentication">
                                     @csrf
                                     <div class="form-group">
@@ -86,9 +91,6 @@
                                         <a href="{{ route('password.request') }}">Forgot your password?</a>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                    <div class="text-center mt-3">
-                                        <p>No account yet? <a href="{{ route('register') }}">Register</a></p>
-                                    </div>
                                 </form>
                             </div>
                         </div>
