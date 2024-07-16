@@ -106,10 +106,15 @@
                             @foreach ($potongan->jenisPotonganGaji as $jenis)
                                 <tr>
                                     <td>{{ $jenis->jenis_potongan }}:</td>
-                                    <td>{{ number_format($jenis->jumlah, 2) }}</td>
+                                    <td>{{ $jenis->jumlah}}</td>
+                                    
                                 </tr>
                             @endforeach
                         @endforeach
+                        <tr>
+                            <td >BPJS:</td>
+                            <td >{{number_format($jumlah_bpjs, 2)}}</td>
+                        </tr>
                         <tr>
                             <td>Total Potongan:</td>
                             <td>{{ number_format($total_potongan_gaji, 2) }}</td>

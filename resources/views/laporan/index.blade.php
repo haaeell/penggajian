@@ -32,9 +32,7 @@
                                     @endfor
                                 </select>
                             </div>
-                            
                         </div>
-                        
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 text-end">
@@ -43,14 +41,11 @@
                             </button>
                         </div>
                     </div>
-                    
-                    </div>
                 </form>
             </div>
         </div>
         <div class="card shadow border-0"> 
             <div class="card-body">
-            
                 @if(isset($penggajianData))
                     <div class="table-responsive mt-4">
                         <table class="table datatable">
@@ -71,9 +66,9 @@
                                         <td>{{ $data->karyawan->nik }}</td>
                                         <td>{{ $data->karyawan->user->name }}</td>
                                         <td>{{ $data->karyawan->jabatan->jabatan }}</td>
-                                        <td>{{ ' Rp. ' . number_format($data->total_potongan, 0, ',', '.')}}</td>
-                                        <td>{{ ' Rp. ' . number_format($data->total_penghasilan, 0, ',', '.')}}</td>
-                                        <td>{{ ' Rp. ' . number_format($data->gaji_bersih, 0, ',', '.')}}</td>
+                                        <td>{{ 'Rp. ' . number_format($data->total_penghasilan, 0, ',', '.') }}</td>
+                                        <td>{{ 'Rp. ' . number_format($data->total_potongan, 0, ',', '.') }}</td>
+                                        <td>{{ 'Rp. ' . number_format($data->gaji_bersih, 0, ',', '.') }}</td>
                                         <td>{{ $data->bulan->translatedFormat('F Y') }}</td>
                                     </tr>
                                 @endforeach
@@ -86,4 +81,3 @@
     </div>
 </div>
 @endsection
-

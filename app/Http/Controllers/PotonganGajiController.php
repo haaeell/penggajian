@@ -102,7 +102,7 @@ class PotonganGajiController extends Controller
     {
         $potonganGaji = PotonganGaji::findOrFail($id);
         $karyawan = Karyawan::with('user')->get();
-        $jenisPotonganGaji = JenisPotonganGaji::all();
+        $jenisPotonganGaji = JenisPotonganTetap::all();
 
         $selectedJenisPotonganGaji = $potonganGaji->jenisPotonganGaji->pluck('id')->toArray();
 
@@ -129,7 +129,7 @@ class PotonganGajiController extends Controller
         ]);
 
         try {
-            $potonganGaji = PotonganGaji::findOrFail($id);
+            $potonganGaji = PotonganTetap::findOrFail($id);
             $potonganGaji->karyawan_id = $request->karyawan_id;
             $potonganGaji->bulan = $request->bulan;
             $potonganGaji->tahun = $request->tahun;

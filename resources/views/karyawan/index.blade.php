@@ -61,10 +61,10 @@
     <!-- Modal Tambah/Edit Karyawan -->
     <div class="modal fade" id="modalTambahKaryawan" tabindex="-1" aria-labelledby="modalTambahKaryawanLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTambahKaryawanLabel">Tambah Karyawan</h5>
+                    <h5 class="modal-title" id="modalTambahKaryawanLabel">Edit Karyawan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="formTambahKaryawan">

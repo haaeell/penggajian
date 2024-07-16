@@ -176,12 +176,13 @@
 
                         // Mendapatkan nama bulan berdasarkan angka bulan
                         var namaBulanString = namaBulan[data.bulan - 1];
+                        console.log(data);
                         data.jenis_potongan.forEach(function(jenis) {
                             jenisPotonganHtml +=
                                 `
                                   <tr>
                     <td style="padding: 8px; border: 1px solid #dddddd;"><strong>${jenis.jenis_potongan}:</strong></td>
-                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(jenis.jumlah)}</strong></td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>Rp.${jenis.jumlah}</strong></td>
                 </tr>
                                 `;
                         });
@@ -229,7 +230,11 @@
         <div class="col-md-6">
             <p><strong>Potongan:</strong></p>
             <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">
-                ${jenisPotonganHtml} <!-- Di sini Anda bisa memasukkan kode PHP atau HTML untuk menampilkan jenis potongan -->
+                ${jenisPotonganHtml}
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #dddddd;"><strong>BPJS:</strong></td>
+                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(data.jumlah_bpjs)}</strong></td>
+                </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #dddddd;"><strong>Total Potongan:</strong></td>
                     <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>${number_format(data.total_potongan_gaji)}</strong></td>

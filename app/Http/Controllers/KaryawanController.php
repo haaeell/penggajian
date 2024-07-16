@@ -129,6 +129,7 @@ class KaryawanController extends Controller
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required',
             'alamat' => 'required',
+            'nik' => 'required',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
@@ -143,8 +144,14 @@ class KaryawanController extends Controller
         // Update Karyawan
         $karyawan->update([
             'jabatan_id' => $request->jabatan_id,
+            'nik' => $request->nik,
             'tanggal_bergabung' => $request->tanggal_bergabung,
             'no_hp' => $request->no_hp,
+            'no_rekening' => $request->no_rekening,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
         return response()->json(['success' => 'Karyawan updated successfully.']);

@@ -87,10 +87,75 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'pimpinan')
+                    @if (Auth::user()->role == 'admin')
+                    <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
+                        <a href="/home" class="menu-link">
+                            <i class="menu-icon tf-icons bx bi bi-house"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('karyawan.index') ? 'active' : '' }}">
+                        <a href="{{ route('karyawan.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-database-add"></i>
+                            Data Karyawan
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
+                        <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-person-workspace"></i>
+                            Data Jabatan
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
+                        <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-journal-check"></i>
+                            Absensi
+                        </a>
+                    </li>
+                    <li
+                    class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
+                        <i class="bi bi-clipboard2-minus-fill"></i>
+                        Potongan Gaji
+                    </a>
+                    <ul class="menu-sub">
+                        <li
+                            class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
+                            <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link">
+                                <div data-i18n="Without menu">Jenis Potongan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
+                            <a href="{{ route('potongan-gaji.index') }}" class="menu-link">
+                                <div data-i18n="Without navbar">Potong Gaji</div>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </li>
+                <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
+                    <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
+                        <i class="bi bi-calculator"></i>
+                        Penggajian
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
+                    <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
+                        <i class="bi bi-clipboard2-data"></i>
+                        Laporan
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class="menu-link gap-3">
+                        <i class="bi bi-person-fill-add"></i>
+                        Users
+                    </a>
+                </li>
+                    @endif
+                    @if (Auth::user()->role == 'pimpinan')
                         <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
                             <a href="/home" class="menu-link">
-                                <i class="menu-icon tf-icons bi bi-house"></i>
+                                <i class="menu-icon tf-icons bx bi bi-house"></i>
                                 <div data-i18n="Analytics">Dashboard</div>
                             </a>
                         </li>
@@ -100,52 +165,12 @@
                                 Data Karyawan
                             </a>
                         </li>
-                    @endif
-                    @if (Auth::user()->role == 'admin')
-                        <li class="menu-item {{ request()->routeIs('jabatans.index') ? 'active' : '' }}">
-                            <a href="{{ route('jabatans.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-person-workspace"></i>
-                                Data Jabatan
-                            </a>
-                        </li>
-                        @if (Auth::user()->role == 'pimpinan' || Auth::user()->role == 'admin')
                         <li class="menu-item {{ request()->routeIs('absensi.index') ? 'active' : '' }}">
                             <a href="{{ route('absensi.index') }}" class="menu-link gap-3">
                                 <i class="bi bi-journal-check"></i>
                                 Absensi
                             </a>
                         </li>
-
-                        <li
-                            class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
-                                <i class="bi bi-clipboard2-minus-fill"></i>
-                                Potongan Gaji
-                            </a>
-                            <ul class="menu-sub">
-                                <li
-                                    class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
-                                    <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link">
-                                        <div data-i18n="Without menu">Jenis Potongan</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item {{ request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
-                                    <a href="{{ route('potongan-gaji.index') }}" class="menu-link">
-                                        <div data-i18n="Without navbar">Potong Gaji</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
-                            <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-calculator"></i>
-                                Penggajian
-                            </a>
-                        </li>
-                    @endif
-                    
-
-                  
                         <li class="menu-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}">
                             <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
                                 <i class="bi bi-clipboard2-data"></i>
@@ -153,15 +178,17 @@
                             </a>
                         </li>
                     @endif
-                    @if (Auth::user()->role == 'admin')
-                        <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                            <a href="{{ route('users.index') }}" class="menu-link gap-3">
-                                <i class="bi bi-person-fill-add"></i>
-                                Users
-                            </a>
-                        </li>
+                    {{-- karyawan --}}
+                    @if (Auth::user()->role == 'karyawan')
+                    <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
+                        <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-calculator"></i>
+                            Penggajian
+                        </a>
+                    </li> 
+                    
                     @endif
-
+                    
 
                 </ul>
 

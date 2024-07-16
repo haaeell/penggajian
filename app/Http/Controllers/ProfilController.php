@@ -20,38 +20,52 @@ class ProfilController extends Controller
      * Update profil karyawan.
      */
     public function update(Request $request, $id)
-    {
-        // Validasi data input
-        $validatedData = $request->validate([
-            'nik' => 'required|string',
-            'tanggal_bergabung' => 'required|date',
-            'no_hp' => 'required|string',
-            'alamat' => 'required|string',
-            'no_rekening' => 'required|string',
-            'tempat_lahir' => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
-        ]);
+{
+    // Validasi data input
+    $validatedData = $request->validate([
+        'nik' => 'required|string',
+        'tanggal_bergabung' => 'required|date',
+        'no_hp' => 'required|string',
+        'alamat' => 'required|string',
+        'no_rekening' => 'required|string',
+        'tempat_lahir' => 'required|string',
+        'tanggal_lahir' => 'required|date',
+        'jenis_kelamin' => 'required|in:L,P',
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+        'password' => 'nullable|string|confirmed',
+    ]);
 
-        try {
-            // Cari data karyawan berdasarkan ID
-            $karyawan = Karyawan::findOrFail($id);
+    try {
+        // Cari data karyawan berdasarkan ID
+        $karyawan = Karyawan::findOrFail($id);
+        $user = $karyawan->user;
 
-            if ($request->hasFile('foto')) {
-                $file = $request->file('foto');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads/foto'), $filename);
-                $validatedData['foto'] = $filename;
-            }
-            // Update data karyawan
-            $karyawan->update($validatedData);
-
-            // Response jika berhasil
-            return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
-
-        } catch (\Exception $e) {
-            // Response jika terjadi error
-            return redirect()->back()->withInput()->with('error', 'Gagal memperbarui profil: ' . $e->getMessage());
+        // Update data user
+        $user->name = $request->input('name');
+        if ($request->input('email') != $user->email) {
+            $user->email = $request->input('email');
         }
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        $user->save();
+
+        // Update data karyawan
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/foto'), $filename);
+            $validatedData['foto'] = $filename;
+        }
+        $karyawan->update($validatedData);
+
+        // Response jika berhasil
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
+    } catch (\Exception $e) {
+        // Response jika terjadi error
+        return redirect()->back()->withInput()->with('error', 'Gagal memperbarui profil: ' . $e->getMessage());
     }
+}
+
 }

@@ -14,6 +14,16 @@
 
                         <div class="row">
                             <div class="col-md-6">
+                                <!-- User fields -->
+                                <div class="form-group mb-2">
+                                    <label for="name">Nama</label>
+                                    <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $karyawan->user->name) }}">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $karyawan->user->email) }}">
+                                </div>
+                                <!-- Karyawan fields -->
                                 <div class="form-group mb-2">
                                     <label for="foto">Foto Profil</label>
                                     <input type="file" id="foto" name="foto" class="form-control">
@@ -29,18 +39,10 @@
                                     <label for="tanggal_bergabung">Tanggal Bergabung</label>
                                     <input type="date" id="tanggal_bergabung" name="tanggal_bergabung" class="form-control" value="{{ old('tanggal_bergabung', $karyawan->tanggal_bergabung) }}">
                                 </div>
-                                <div class="form-group mb-2">
-                                    <label for="no_hp">Nomor HP</label>
-                                    <input type="text" id="no_hp" name="no_hp" class="form-control" value="{{ old('no_hp', $karyawan->no_hp) }}">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="alamat">Alamat</label>
-                                    <textarea id="alamat" name="alamat" class="form-control">{{ old('alamat', $karyawan->alamat) }}</textarea>
-                                </div>
+                                
                             </div>
 
                             <div class="col-md-6">
-   
                                 <div class="form-group mb-2">
                                     <label for="no_rekening">Nomor Rekening</label>
                                     <input type="text" id="no_rekening" name="no_rekening" class="form-control" value="{{ old('no_rekening', $karyawan->no_rekening) }}">
@@ -60,10 +62,25 @@
                                         <option value="P" {{ old('jenis_kelamin', $karyawan->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
                                     </select>
                                 </div>
+                                <div class="form-group mb-2">
+                                    <label for="no_hp">Nomor HP</label>
+                                    <input type="text" id="no_hp" name="no_hp" class="form-control" value="{{ old('no_hp', $karyawan->no_hp) }}">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="alamat">Alamat</label>
+                                    <textarea id="alamat" name="alamat" class="form-control">{{ old('alamat', $karyawan->alamat) }}</textarea>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password" class="form-control">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="password_confirmation">Konfirmasi Password</label>
+                                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
+                                </div>
                             </div>
                         </div>
                      
-
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary" style="background-color: #28a745; border-color: #28a745;">Simpan</button>
                     </form>

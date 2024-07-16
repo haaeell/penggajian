@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Karyawan;
 use App\Models\Penggajian;
 use App\Models\PotonganGaji;
+use App\Models\JenisPotonganGaji;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -23,6 +24,8 @@ class PenggajianController extends Controller
     
     $bulan = $request->bulan;
     $tahun = $request->tahun;
+
+   
 
     // Logika untuk mengambil data gaji karyawan
     if (auth()->user()->role == 'karyawan') {
@@ -64,8 +67,10 @@ class PenggajianController extends Controller
 
         $hadir = $karyawan->absensi->sum('hadir');
         $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan  + $tunjangan_jabatan;
-
-        $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
+       
+        $potongan_bpjs = JenisPotonganGaji::where('jenis_potongan', 'BPJS Kesehatan')->first();
+        $jumlah_bpjs = (int) str_replace('.', '', $potongan_bpjs->jumlah); 
+        $total_potongan_gaji = $jumlah_bpjs + $karyawan->potonganGaji->sum('total_potongan_gaji');
         $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
 
         $penggajianData[] = [
@@ -97,8 +102,9 @@ class PenggajianController extends Controller
 
         $hadir = $karyawan->absensi->sum('hadir');
         $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan  + $tunjangan_jabatan;
-
-        $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
+        $potongan_bpjs = JenisPotonganGaji::where('jenis_potongan', 'BPJS Kesehatan')->first();
+        $jumlah_bpjs = (int) str_replace('.', '', $potongan_bpjs->jumlah); 
+        $total_potongan_gaji = $jumlah_bpjs + $karyawan->potonganGaji->sum('total_potongan_gaji');
         $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
 
         $data = [
@@ -111,6 +117,7 @@ class PenggajianController extends Controller
             'gaji_kotor' => $gaji_kotor,
             'total_potongan_gaji' => $total_potongan_gaji,
             'gaji_bersih' => $gaji_bersih,
+            'jumlah_bpjs' => $jumlah_bpjs,
             'tanggal' => now()->locale('id')->isoFormat('D MMMM YYYY'),
             'bulan' => now()->locale('id')->isoFormat('MMMM YYYY'),
             'jenis_potongan' => $karyawan->potonganGaji->flatMap(function ($potongan) {
@@ -188,8 +195,9 @@ class PenggajianController extends Controller
     // Menghitung gaji kotor
     $gaji_kotor = ($gaji_per_hari * $hadir) + $tunjangan_transportasi + $uang_makan + $tunjangan_jabatan;
 
-    // Menghitung total potongan gaji
-    $total_potongan_gaji = $karyawan->potonganGaji->sum('total_potongan_gaji');
+    $potongan_bpjs = JenisPotonganGaji::where('jenis_potongan', 'BPJS Kesehatan')->first();
+    $jumlah_bpjs = (int) str_replace('.', '', $potongan_bpjs->jumlah); 
+    $total_potongan_gaji = $jumlah_bpjs + $karyawan->potonganGaji->sum('total_potongan_gaji');
 
     // Menghitung gaji bersih
     $gaji_bersih = $gaji_kotor - $total_potongan_gaji;
@@ -206,6 +214,7 @@ class PenggajianController extends Controller
         'gaji_kotor' => $gaji_kotor,
         'total_potongan_gaji' => $total_potongan_gaji,
         'gaji_bersih' => $gaji_bersih,
+        'jumlah_bpjs' => $jumlah_bpjs, 
         'jenis_potongan' => $karyawan->potonganGaji->flatMap(function ($potongan) {
             return $potongan->jenisPotonganGaji;
         }),

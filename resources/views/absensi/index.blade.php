@@ -103,6 +103,7 @@
                                 <input type="hidden" name="bulan" value="{{ request('bulan', now()->month) }}">
                                 <input type="hidden" name="tahun" value="{{ request('tahun', now()->year) }}">
 
+                                @if (auth()->user()->role != 'karyawan')
                                 <div class="row mt-4">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
@@ -162,6 +163,49 @@
                                                 class="bi bi-save"></i> Simpan Absensi</button>
                                     </div>
                                 </div>
+                                @else
+                                <div class="row mt-4">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table datatable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Jabatan</th>
+                                                        <th>Hadir</th>
+                                                        <th>Izin</th>
+                                                        <th>Sakit</th>
+                                                        <th>Alpa</th>
+
+                                                        @if (Auth::user()->role == 'admin')
+                                                            <th class="text-center">Aksi</th>
+                                                        @endif
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($absensi as $absen)
+                                                    <tr>
+                                                        <td>{{ $absen->bulan }}</td>
+                                                        <td>{{ $absen->tahun }}</td>
+                                                        <td>{{$absen->karyawan->jabatan->jabatan}}</td>
+                                                        <td>{{ $absen->hadir }}</td>
+                                                        <td>{{ $absen->izin }}</td>
+                                                        <td>{{ $absen->sakit }}</td>
+                                                        <td>{{ $absen->alpa }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <button type="submit" class="btn rounded-pill btn-primary mt-3"
+                                            style="background-color: #28a745; color: white; border-color: #28a745;"><i
+                                                class="bi bi-save"></i> Simpan Absensi</button>
+                                    </div>
+                                </div>
+                                @endif
                             </form>
                         </div>
                     </div>

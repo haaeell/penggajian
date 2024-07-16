@@ -18,13 +18,25 @@ class AbsensiController extends Controller
     {
         $bulan = $request->input('bulan', now()->month);
         $tahun = $request->input('tahun', now()->year);
+    
+        if(auth()->user()->role == 'karyawan'){
+            $karyawan = Karyawan::with(['user', 'jabatan'])
+                ->where('id', auth()->user()->karyawan->id)
+                ->first();
+            
+            $absensi = Absensi::where('bulan', $bulan)
+                ->where('tahun', $tahun)
+                ->where('karyawan_id', auth()->user()->karyawan->id)
+                ->get();
 
-        $karyawan = Karyawan::with(['user', 'jabatan'])->get();
-        $absensi = Absensi::where('bulan', $bulan)
-            ->where('tahun', $tahun)
-            ->get()
-            ->keyBy('karyawan_id');
-
+        } else {
+            $karyawan = Karyawan::with(['user', 'jabatan'])->get();
+            $absensi = Absensi::where('bulan', $bulan)
+                ->where('tahun', $tahun)
+                ->get()
+                ->keyBy('karyawan_id');
+        }
+    
         return view('absensi.index', compact('karyawan', 'absensi', 'bulan', 'tahun'));
     }
 
