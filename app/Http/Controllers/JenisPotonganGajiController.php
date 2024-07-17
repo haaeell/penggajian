@@ -26,6 +26,9 @@ class JenisPotonganGajiController extends Controller
                     $btn .= ' <button class="btn btn-danger btn-sm btn-delete" data-id="' . $row->id . '"><i class="bi bi-trash"></i></button>';
                     return $btn;
                 })
+                ->editColumn('isWajib', function ($row) {
+                    return $row->isWajib ? 'Wajib' : 'Tidak Wajib';
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -48,17 +51,23 @@ class JenisPotonganGajiController extends Controller
     {
         $request->validate([
             'jenis_potongan' => 'required|string|max:255',
-            'jumlah' => 'required|string', // Ubah validasi 'numeric' menjadi 'string'
+            'jenis_input' => 'required|string|in:nilai,persen',
+            'jumlah' => 'required|string', 
+            'isWajib' => 'boolean',
         ]);
-
-        // Hapus format rupiah dari jumlah
-        $jumlah = str_replace(['Rp.', '.', ','], '', $request->jumlah);
-
+    
+        $jumlah = $request->jumlah;
+        if ($request->jenis_input === 'nilai') {
+            $jumlah = str_replace(['Rp.', '.', ','], '', $jumlah);
+        }
+        $wajib = $request->isWajib ? true : false;
+    
         $jenisPotonganGaji = JenisPotonganGaji::create([
             'jenis_potongan' => $request->jenis_potongan,
             'jumlah' => $jumlah,
+            'isWajib' => $wajib,
         ]);
-
+    
         return response()->json(['success' => 'Jenis potongan gaji ditambahkan dengan sukses.']);
     }
 
@@ -83,23 +92,29 @@ class JenisPotonganGajiController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'jenis_potongan' => 'required|string|max:255',
-            'jumlah' => 'required|string', // Ubah validasi 'numeric' menjadi 'string'
-        ]);
+{
+    $request->validate([
+        'jenis_potongan' => 'required|string|max:255',
+        'jenis_input' => 'required|string|in:nilai,persen',
+        'jumlah' => 'required|string', 
+        'isWajib' => 'boolean',
+    ]);
 
-        // Hapus format rupiah dari jumlah
-        $jumlah = str_replace(['Rp.', '.', ','], '', $request->jumlah);
-
-        $jenisPotonganGaji = JenisPotonganGaji::findOrFail($id);
-        $jenisPotonganGaji->update([
-            'jenis_potongan' => $request->jenis_potongan,
-            'jumlah' => $jumlah,
-        ]);
-
-        return response()->json(['success' => 'Jenis potongan gaji diperbarui dengan sukses.']);
+    $jumlah = $request->jumlah;
+    if ($request->jenis_input === 'nilai') {
+        $jumlah = str_replace(['Rp.', '.', ','], '', $jumlah);
     }
+    $wajib = $request->isWajib ? true : false;
+
+    $jenisPotonganGaji = JenisPotonganGaji::findOrFail($id);
+    $jenisPotonganGaji->update([
+        'jenis_potongan' => $request->jenis_potongan,
+        'jumlah' => $jumlah,
+        'isWajib' => $wajib,
+    ]);
+
+    return response()->json(['success' => 'Jenis potongan gaji diperbarui dengan sukses.']);
+}
 
     /**
      * Remove the specified resource from storage.

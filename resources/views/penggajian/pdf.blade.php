@@ -57,6 +57,7 @@
             <h5 class="text-center">Klinik NU Muntilan</h5>
             <p class="text-center">Jl. Watucongol, Kec. Santren Gunungpring, Magelang</p>
             <hr>
+          
             <h5 class="text-center">Slip Gaji Karyawan</h5>
             <table style="border:none">
                 <tr>
@@ -111,10 +112,13 @@
                                 </tr>
                             @endforeach
                         @endforeach
-                        <tr>
-                            <td >BPJS:</td>
-                            <td >{{number_format($jumlah_bpjs, 2)}}</td>
-                        </tr>
+                        @foreach ( $detail_potongan_wajib as $item)
+                            <tr>
+                                <td>{{ $item['jenis_potongan'] }}:</td>
+                                <td>{{ number_format($item['potongan'], 2) }}</td>
+                            </tr>
+                        @endforeach
+                        
                         <tr>
                             <td>Total Potongan:</td>
                             <td>{{ number_format($total_potongan_gaji, 2) }}</td>

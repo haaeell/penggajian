@@ -32,7 +32,7 @@ class PotonganGajiController extends Controller
             ->get();
     
         $karyawan = Karyawan::with('user')->get();
-        $jenisPotonganGaji = JenisPotonganGaji::all();
+        $jenisPotonganGaji = JenisPotonganGaji::where('isWajib', false)->get();
     
         return view('potongan_gaji.index', compact('potonganGajiQuery', 'karyawan', 'jenisPotonganGaji', 'bulan', 'tahun'));
     }

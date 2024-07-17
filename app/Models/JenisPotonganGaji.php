@@ -14,11 +14,14 @@ class JenisPotonganGaji extends Model
     protected $fillable = [
         'jenis_potongan',
         'jumlah',
+        'isWajib',
     ];
 
+   
     public function potonganGaji()
     {
         return $this->belongsToMany(PotonganGaji::class, 'karyawan_jenis_potongan_gaji', 'jenis_potongan_gaji_id', 'potongan_gaji_id')
+                    ->withPivot('jumlah', 'isWajib') // sesuaikan dengan kolom di tabel pivot
                     ->withTimestamps();
     }
 

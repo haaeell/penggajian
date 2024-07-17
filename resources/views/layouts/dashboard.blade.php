@@ -134,7 +134,7 @@
                     </ul>
                 </li>
                 <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
-                    <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
+                    <a href="/penggajian?bulan=7&tahun=2024" class="menu-link gap-3">
                         <i class="bi bi-calculator"></i>
                         Penggajian
                     </a>
