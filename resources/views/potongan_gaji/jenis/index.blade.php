@@ -126,7 +126,7 @@
                             if (data.includes('.')) {
                                 return formatRupiah(data.toString(), 'Rp. ');
                             } else {
-                                return parseFloat(data).toFixed(2) + ' %';
+                                return parseFloat(data) + ' %';
                             }
                         }
                     },
