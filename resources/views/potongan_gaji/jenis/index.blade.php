@@ -54,12 +54,7 @@
                                 <label for="jumlah" class="form-label">Jumlah</label>
                                 <input type="text" class="form-control" id="jumlah" name="jumlah" required>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="isWajib" name="isWajib" value="1">
-                                    <label class="form-check-label" for="isWajib">Wajib</label>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

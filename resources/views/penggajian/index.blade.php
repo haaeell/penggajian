@@ -160,6 +160,7 @@
                 success: function(data) {
                     console.log(data);
                     var jenisPotonganHtml = '';
+                    var pinjamanHtml = '';
                     var namaBulan = [
                         'Januari', 'Februari', 'Maret', 'April',
                         'Mei', 'Juni', 'Juli', 'Agustus',
@@ -178,14 +179,23 @@
                     });
 
                     data.jenis_potongan.forEach(function(jenis) {
-                            jenisPotonganHtml +=
-                                `
-                                  <tr>
-                    <td style="padding: 8px; border: 1px solid #dddddd;"><strong>${jenis.jenis_potongan}:</strong></td>
-                    <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>Rp.${jenis.jumlah}</strong></td>
-                </tr>
-                                `;
-                        });
+                        jenisPotonganHtml += `
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #dddddd;"><strong>${jenis.jenis_potongan}:</strong></td>
+                                <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>Rp.${number_format(jenis.jumlah)}</strong></td>
+                            </tr>
+                        `;
+                    });
+
+                    // Menambahkan informasi pinjaman yang disetujui
+                    data.pinjamanPotongan.forEach(function(pinjaman) {
+                        pinjamanHtml += `
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #dddddd;"><strong>Pinjaman: ${pinjaman.tujuan}</strong></td>
+                                <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>Rp.${number_format(pinjaman.jumlah)}</strong></td>
+                            </tr>
+                        `;
+                    });
 
                     var detailHtml = `
                         <div class="struk-gaji">
@@ -227,6 +237,7 @@
                                     <p><strong>Potongan:</strong></p>
                                     <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px;">
                                         ${jenisPotonganHtml}
+                                        ${pinjamanHtml}
                                         <tr>
                                             <td style="padding: 8px; border: 1px solid #dddddd;"><strong>Total Potongan:</strong></td>
                                             <td colspan="2" style="padding: 8px; border: 1px solid #dddddd;"><strong>Rp.${number_format(data.total_potongan_gaji)}</strong></td>
@@ -236,11 +247,10 @@
                             </div>
                           <div class="mt-4">
                              <p class="m-0 text-end"><strong>Gaji Kotor: Rp.${number_format(data.gaji_kotor)}</strong></p>
-<p class="m-0 text-end text-danger"><strong>Potongan: Rp.${number_format(data.total_potongan_gaji)}</strong></p>
-<hr style="width: 50%; margin: 10px 0 10px auto;">
-<p class="m-0 text-end"><strong>Gaji Bersih yang Diterima: Rp.${number_format(data.gaji_bersih)}</strong></p>
-                            </div>
-
+                             <p class="m-0 text-end text-danger"><strong>Potongan: Rp.${number_format(data.total_potongan_gaji)}</strong></p>
+                             <hr style="width: 50%; margin: 10px 0 10px auto;">
+                             <p class="m-0 text-end"><strong>Gaji Bersih yang Diterima: Rp.${number_format(data.gaji_bersih)}</strong></p>
+                          </div>
                         </div>
                     `;
 
@@ -278,3 +288,4 @@
     }
 </script>
 @endpush
+
