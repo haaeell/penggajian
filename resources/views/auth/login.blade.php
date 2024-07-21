@@ -57,11 +57,17 @@
                 <div class="card mb-4 border-0 shadow">
                     <div class="row no-gutters">
                         <div class="col-md-6 image-section">
-                            <img src="{{asset('assets/img/poster.png')}}" alt="Poster Image"> <!-- Update with the correct path to your image -->
+                            <img src="{{ asset('assets/img/poster.png') }}" alt="Poster Image">
                         </div>
                         <div class="col-md-6 form-section">
                             <div class="card-body">
                                 <h2 class="card-title">LOGIN</h2>
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-danger" id="login-error">
+                                        {{ $errors->first('email') }}
+                                        <span id="timer"></span>
+                                    </div>
+                                @endif
                                 <form action="{{ route('login') }}" method="POST" id="formAuthentication">
                                     @csrf
                                     <div class="form-group">
@@ -88,7 +94,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group d-flex justify-content-between">
-                                        <a href="{{ route('password.request') }}">Forgot your password?</a>
+                                        <a href="{{ route('password.request') }}">Lupa kata sandi?</a>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                                 </form>
@@ -114,6 +120,23 @@
                     $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
                 }
             });
+
+            @if ($errors->has('email'))
+                let errorMessage = {!! json_encode($errors->first('email')) !!};
+                let match = errorMessage.match(/dalam (\d+) detik/);
+                if (match) {
+                    let countdown = parseInt(match[1]);
+                    let timer = $('#timer');
+                    let interval = setInterval(function() {
+                        timer.text(countdown + ' detik');
+                        countdown--;
+                        if (countdown < 0) {
+                            clearInterval(interval);
+                            $('#login-error').hide();
+                        }
+                    }, 1000);
+                }
+            @endif
         });
     </script>
 </body>

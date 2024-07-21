@@ -9,6 +9,7 @@ use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PotonganGajiController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
+Route::post('login', [LoginController::class, 'login'])->middleware('throttle.login');
 Route::middleware('auth')->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
