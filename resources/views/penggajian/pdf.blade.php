@@ -107,24 +107,45 @@
                             @foreach ($potongan->jenisPotonganGaji as $jenis)
                                 <tr>
                                     <td>{{ $jenis->jenis_potongan }}:</td>
-                                    <td>{{ $jenis->jumlah}}</td>
-                                    
+                                    <td>{{ number_format($jenis->jumlah, 2) }}</td>
                                 </tr>
                             @endforeach
                         @endforeach
-                        @foreach ( $detail_potongan_wajib as $item)
+                        @foreach ($detail_potongan_wajib as $item)
                             <tr>
                                 <td>{{ $item['jenis_potongan'] }}:</td>
                                 <td>{{ number_format($item['potongan'], 2) }}</td>
                             </tr>
                         @endforeach
-                        
                         <tr>
                             <td>Total Potongan:</td>
                             <td>{{ number_format($total_potongan_gaji, 2) }}</td>
                         </tr>
+                       
                     </table>
                 </div>
+            </div>
+            <hr>
+            <div>
+                <h5>Rincian Pinjaman</h5>
+                <table class="table">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
+                        <th>Tujuan</th>
+                    </tr>
+                    @foreach ($rincian_pinjaman as $pinjaman)
+                        <tr>
+                            <td>{{ $pinjaman->tanggal }}</td>
+                            <td>{{ number_format($pinjaman->jumlah, 2) }}</td>
+                            <td>{{ $pinjaman->tujuan }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td>Total Pinjaman:</td>
+                        <td colspan="2">{{ number_format($total_pinjaman, 2) }}</td>
+                    </tr>
+                </table>
             </div>
             <hr>
         </div>

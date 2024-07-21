@@ -53,19 +53,17 @@ class JenisPotonganGajiController extends Controller
             'jenis_potongan' => 'required|string|max:255',
             'jenis_input' => 'required|string|in:nilai,persen',
             'jumlah' => 'required|string', 
-            'isWajib' => 'boolean',
         ]);
     
         $jumlah = $request->jumlah;
         if ($request->jenis_input === 'nilai') {
             $jumlah = str_replace(['Rp.', '.', ','], '', $jumlah);
         }
-        $wajib = $request->isWajib ? true : false;
     
         $jenisPotonganGaji = JenisPotonganGaji::create([
             'jenis_potongan' => $request->jenis_potongan,
             'jumlah' => $jumlah,
-            'isWajib' => $wajib,
+            'isWajib' => true,
         ]);
     
         return response()->json(['success' => 'Jenis potongan gaji ditambahkan dengan sukses.']);
@@ -104,13 +102,12 @@ class JenisPotonganGajiController extends Controller
     if ($request->jenis_input === 'nilai') {
         $jumlah = str_replace(['Rp.', '.', ','], '', $jumlah);
     }
-    $wajib = $request->isWajib ? true : false;
 
     $jenisPotonganGaji = JenisPotonganGaji::findOrFail($id);
     $jenisPotonganGaji->update([
         'jenis_potongan' => $request->jenis_potongan,
         'jumlah' => $jumlah,
-        'isWajib' => $wajib,
+        'isWajib' => true,
     ]);
 
     return response()->json(['success' => 'Jenis potongan gaji diperbarui dengan sukses.']);

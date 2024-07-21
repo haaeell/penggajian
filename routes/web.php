@@ -6,6 +6,7 @@ use App\Http\Controllers\JenisPotonganGajiController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenggajianController;
+use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\PotonganGajiController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UserController;
@@ -56,5 +57,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/import-karyawan', [KaryawanController::class, 'import'])->name('import.karyawan');
     Route::post('/import-absensi', [AbsensiController::class, 'import'])->name('import.absensi');
+
+    Route::get('pinjaman', [PinjamanController::class, 'index'])->name('pinjaman.index');
+    Route::get('pinjaman/create', [PinjamanController::class, 'create'])->name('pinjaman.create');
+    Route::post('pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');
+    Route::patch('pinjaman/{id}/approve', [PinjamanController::class, 'approve'])->name('pinjaman.approve');
+    Route::patch('pinjaman/{id}/reject', [PinjamanController::class, 'reject'])->name('pinjaman.reject');
 
 });

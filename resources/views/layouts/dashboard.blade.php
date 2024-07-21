@@ -112,7 +112,7 @@
                             Absensi
                         </a>
                     </li>
-                    <li
+                    {{-- <li
                     class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') || request()->routeIs('potongan-gaji.index') ? 'active' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle gap-3">
                         <i class="bi bi-clipboard2-minus-fill"></i>
@@ -132,7 +132,14 @@
                         </li>
                        
                     </ul>
-                </li>
+                </li> --}}
+                <li
+                class="menu-item {{ request()->routeIs('jenis-potongan-gaji.index') ? 'active' : '' }}">
+                <a href="{{ route('jenis-potongan-gaji.index') }}" class="menu-link gap-3">
+                    <i class="bi bi-clipboard2-minus-fill"></i>
+                    Potongan
+                </a>
+            </li>
                 <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
                     <a href="/penggajian?bulan=7&tahun=2024" class="menu-link gap-3">
                         <i class="bi bi-calculator"></i>
@@ -143,6 +150,12 @@
                     <a href="{{ route('laporan.index') }}" class="menu-link gap-3">
                         <i class="bi bi-clipboard2-data"></i>
                         Laporan
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('pinjaman.index') ? 'active' : '' }}">
+                    <a href="{{ route('pinjaman.index') }}" class="menu-link gap-3">
+                        <i class="bi bi-clipboard2-data"></i>
+                        Pinjaman
                     </a>
                 </li>
                 <li class="menu-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
@@ -177,15 +190,23 @@
                                 Laporan
                             </a>
                         </li>
+                       
                     @endif
                     {{-- karyawan --}}
                     @if (Auth::user()->role == 'karyawan')
                     <li class="menu-item {{ request()->routeIs('penggajian.index') ? 'active' : '' }}">
-                        <a href="{{ route('penggajian.index') }}" class="menu-link gap-3">
+                        <a href="/penggajian?bulan=7&tahun=2024" class="menu-link gap-3">
                             <i class="bi bi-calculator"></i>
                             Penggajian
                         </a>
                     </li> 
+
+                    <li class="menu-item {{ request()->routeIs('pinjaman.index') ? 'active' : '' }}">
+                        <a href="{{ route('pinjaman.index') }}" class="menu-link gap-3">
+                            <i class="bi bi-clipboard2-data"></i>
+                            Pinjaman
+                        </a>
+                    </li>
                     
                     @endif
                     
